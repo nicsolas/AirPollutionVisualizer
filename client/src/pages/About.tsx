@@ -4,47 +4,47 @@ import { ExternalLink } from "lucide-react";
 const About = () => {
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">About Air Pollution Visualization</h1>
+      <h1 className="text-3xl font-bold mb-6">Informazioni sulla Visualizzazione dell'Inquinamento Atmosferico</h1>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <Card className="mb-8">
           <CardHeader>
-            <CardTitle>Understanding Air Pollution</CardTitle>
+            <CardTitle>Comprendere l'Inquinamento Atmosferico</CardTitle>
           </CardHeader>
           <CardContent className="prose dark:prose-invert">
             <p>
-              Air pollution is the presence of substances in the atmosphere that are harmful to the health of humans 
-              and other living beings, or cause damage to the climate or to materials.
+              L'inquinamento atmosferico è la presenza di sostanze nell'atmosfera che sono dannose per la salute umana 
+              e di altri esseri viventi, o che causano danni al clima o ai materiali.
             </p>
             
             <p>
-              There are many different types of air pollutants, such as gases, particulate matter, and biological 
-              molecules. Air pollution can cause diseases, allergies, and even death to humans; it can also cause 
-              harm to other living organisms such as animals and food crops, and may damage the natural or built 
-              environment.
+              Esistono molti tipi diversi di inquinanti atmosferici, come gas, particolato e molecole biologiche. 
+              L'inquinamento atmosferico può causare malattie, allergie e persino la morte negli esseri umani; 
+              può anche danneggiare altri organismi viventi come animali e colture alimentari, e danneggiare l'ambiente 
+              naturale o costruito.
             </p>
             
-            <h3>Key Pollutants</h3>
+            <h3>Inquinanti Principali</h3>
             <ul>
               <li>
-                <strong>Particulate Matter (PM2.5 and PM10)</strong> - Tiny particles or droplets in the air that 
-                are small enough to be inhaled and potentially cause serious health problems.
+                <strong>Particolato (PM2.5 e PM10)</strong> - Minuscole particelle o goccioline nell'aria abbastanza 
+                piccole da essere inalate e potenzialmente causare gravi problemi di salute.
               </li>
               <li>
-                <strong>Nitrogen Dioxide (NO₂)</strong> - A gas primarily emitted from vehicle exhausts and power plants. 
-                It contributes to the formation of smog and acid rain.
+                <strong>Biossido di Azoto (NO₂)</strong> - Gas emesso principalmente dai gas di scarico dei veicoli e dalle 
+                centrali elettriche. Contribuisce alla formazione di smog e piogge acide.
               </li>
               <li>
-                <strong>Sulfur Dioxide (SO₂)</strong> - A gas produced from burning fossil fuels containing sulfur, 
-                industrial processes, and volcanoes.
+                <strong>Biossido di Zolfo (SO₂)</strong> - Gas prodotto dalla combustione di combustibili fossili contenenti 
+                zolfo, processi industriali ed eruzioni vulcaniche.
               </li>
               <li>
-                <strong>Ozone (O₃)</strong> - While beneficial in the upper atmosphere, ground-level ozone is harmful 
-                and forms when pollutants from cars, power plants, and other sources react chemically in sunlight.
+                <strong>Ozono (O₃)</strong> - Mentre è benefico nell'alta atmosfera, l'ozono a livello del suolo è dannoso 
+                e si forma quando gli inquinanti di auto, centrali elettriche e altre fonti reagiscono chimicamente alla luce solare.
               </li>
               <li>
-                <strong>Carbon Monoxide (CO)</strong> - A colorless, odorless gas that is formed when carbon in fuel 
-                is not burned completely.
+                <strong>Monossido di Carbonio (CO)</strong> - Gas incolore e inodore che si forma quando il carbonio nel 
+                combustibile non viene bruciato completamente.
               </li>
             </ul>
           </CardContent>
@@ -52,46 +52,46 @@ const About = () => {
         
         <Card>
           <CardHeader>
-            <CardTitle>Our Visualization</CardTitle>
+            <CardTitle>La Nostra Visualizzazione</CardTitle>
           </CardHeader>
           <CardContent className="prose dark:prose-invert">
             <p>
-              This application provides an interactive 3D visualization of air pollution data, allowing you to:
+              Questa applicazione fornisce una visualizzazione 3D interattiva dei dati sull'inquinamento atmosferico, permettendoti di:
             </p>
             
             <ul>
-              <li>Visualize different pollutants in urban and indoor environments</li>
-              <li>Compare pollution levels across different cities</li>
-              <li>Learn about health effects and sources of various pollutants</li>
-              <li>Explore how pollution levels change over time</li>
+              <li>Visualizzare diversi inquinanti in ambienti urbani e interni</li>
+              <li>Confrontare i livelli di inquinamento tra diverse città</li>
+              <li>Conoscere gli effetti sulla salute e le fonti di vari inquinanti</li>
+              <li>Esplorare come i livelli di inquinamento cambiano nel tempo</li>
             </ul>
             
-            <h3>How to Use This Tool</h3>
+            <h3>Come Utilizzare Questo Strumento</h3>
             <ol>
-              <li>Select a city from the dropdown menu</li>
-              <li>Choose a pollutant to visualize</li>
-              <li>Use the controls to adjust visualization parameters</li>
-              <li>Toggle between day/night views and city/room perspectives</li>
-              <li>Use the time slider to see how pollution levels change throughout the day</li>
+              <li>Seleziona una città dal menu a tendina</li>
+              <li>Scegli un inquinante da visualizzare</li>
+              <li>Usa i controlli per regolare i parametri di visualizzazione</li>
+              <li>Alterna tra viste giorno/notte e prospettive città/stanza</li>
+              <li>Usa lo slider temporale per vedere come i livelli di inquinamento cambiano durante il giorno</li>
             </ol>
             
-            <h3>About the Data</h3>
+            <h3>Informazioni sui Dati</h3>
             <p>
-              The pollution data used in this application is sourced from public air quality monitoring networks 
-              and environmental agencies worldwide. The visualization intensity and particle density are proportional 
-              to actual pollutant concentrations.
+              I dati sull'inquinamento utilizzati in questa applicazione provengono da reti pubbliche di monitoraggio 
+              della qualità dell'aria e agenzie ambientali di tutto il mondo. L'intensità della visualizzazione e la densità 
+              delle particelle sono proporzionali alle concentrazioni effettive degli inquinanti.
             </p>
             
             <p>
-              Air Quality Index (AQI) values follow standard international classifications:
+              I valori dell'Indice di Qualità dell'Aria (AQI) seguono le classificazioni internazionali standard:
             </p>
             <ul>
-              <li>0-50: Good (Green)</li>
-              <li>51-100: Moderate (Yellow)</li>
-              <li>101-150: Unhealthy for Sensitive Groups (Orange)</li>
-              <li>151-200: Unhealthy (Red)</li>
-              <li>201-300: Very Unhealthy (Purple)</li>
-              <li>301+: Hazardous (Maroon)</li>
+              <li>0-50: Buono (Verde)</li>
+              <li>51-100: Moderato (Giallo)</li>
+              <li>101-150: Non salutare per Gruppi Sensibili (Arancione)</li>
+              <li>151-200: Non salutare (Rosso)</li>
+              <li>201-300: Molto Non salutare (Viola)</li>
+              <li>301+: Pericoloso (Bordeaux)</li>
             </ul>
           </CardContent>
         </Card>
@@ -100,28 +100,28 @@ const About = () => {
       <div className="mt-8">
         <Card>
           <CardHeader>
-            <CardTitle>Additional Resources</CardTitle>
+            <CardTitle>Risorse Aggiuntive</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <a href="https://www.who.int/health-topics/air-pollution" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 p-3 rounded-md hover:bg-muted transition-colors">
                 <ExternalLink className="h-5 w-5 flex-shrink-0" />
-                <span>World Health Organization - Air Pollution</span>
+                <span>Organizzazione Mondiale della Sanità - Inquinamento Atmosferico</span>
               </a>
               
               <a href="https://www.epa.gov/air-pollution-transportation" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 p-3 rounded-md hover:bg-muted transition-colors">
                 <ExternalLink className="h-5 w-5 flex-shrink-0" />
-                <span>EPA - Air Pollution Transportation</span>
+                <span>EPA - Inquinamento Atmosferico da Trasporti</span>
               </a>
               
               <a href="https://www.unep.org/explore-topics/air" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 p-3 rounded-md hover:bg-muted transition-colors">
                 <ExternalLink className="h-5 w-5 flex-shrink-0" />
-                <span>UN Environment Programme - Air Quality</span>
+                <span>Programma Ambientale ONU - Qualità dell'Aria</span>
               </a>
               
-              <a href="https://www.lung.org/clean-air" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 p-3 rounded-md hover:bg-muted transition-colors">
+              <a href="https://www.snpambiente.it/aria/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 p-3 rounded-md hover:bg-muted transition-colors">
                 <ExternalLink className="h-5 w-5 flex-shrink-0" />
-                <span>American Lung Association - Clean Air</span>
+                <span>SNPA - Sistema Nazionale Protezione Ambientale</span>
               </a>
             </div>
           </CardContent>
