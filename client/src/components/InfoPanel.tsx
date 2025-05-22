@@ -5,25 +5,25 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { pollutantColors } from "@/lib/utils/colors";
 
-// Pollutant information database
+// Database informazioni inquinanti
 const pollutantInfoData: Record<PollutantType, PollutantInfo> = {
   [PollutantType.PM25]: {
     id: PollutantType.PM25,
     name: "PM2.5",
-    fullName: "Fine Particulate Matter",
-    description: "Tiny particles or droplets in the air that are 2.5 microns or less in width. They can travel deep into the respiratory tract, reaching the lungs and potentially entering the bloodstream.",
+    fullName: "Particolato Fine",
+    description: "Particelle o goccioline nell'aria con diametro inferiore a 2,5 micron. Possono penetrare in profondità nel tratto respiratorio, raggiungendo i polmoni e potenzialmente entrando nel flusso sanguigno.",
     sources: [
-      "Vehicle emissions",
-      "Power plants",
-      "Industrial processes",
-      "Residential wood burning",
-      "Forest fires"
+      "Emissioni veicolari",
+      "Centrali elettriche",
+      "Processi industriali",
+      "Combustione legna domestica",
+      "Incendi boschivi"
     ],
     healthEffects: [
-      "Aggravated asthma",
-      "Decreased lung function",
-      "Irregular heartbeat",
-      "Premature death in people with heart or lung disease"
+      "Aggravamento dell'asma",
+      "Riduzione della funzione polmonare",
+      "Battito cardiaco irregolare",
+      "Morte prematura in persone con malattie cardiache o polmonari"
     ],
     limits: {
       who: 5,
@@ -34,20 +34,20 @@ const pollutantInfoData: Record<PollutantType, PollutantInfo> = {
   [PollutantType.PM10]: {
     id: PollutantType.PM10,
     name: "PM10",
-    fullName: "Coarse Particulate Matter",
-    description: "Inhalable particles that are 10 micrometers or less in diameter, which can enter the lungs and cause health problems.",
+    fullName: "Particolato Grossolano",
+    description: "Particelle inalabili con diametro inferiore a 10 micrometri, che possono entrare nei polmoni e causare problemi di salute.",
     sources: [
-      "Road dust",
-      "Construction",
-      "Mining operations",
-      "Agricultural activities",
-      "Wind-blown dust"
+      "Polvere stradale",
+      "Cantieri edili",
+      "Operazioni minerarie",
+      "Attività agricole",
+      "Polvere trasportata dal vento"
     ],
     healthEffects: [
-      "Respiratory irritation",
-      "Decreased lung function",
-      "Aggravated asthma",
-      "Development of chronic bronchitis"
+      "Irritazione respiratoria",
+      "Riduzione della funzione polmonare",
+      "Aggravamento dell'asma",
+      "Sviluppo di bronchite cronica"
     ],
     limits: {
       who: 15,
@@ -58,19 +58,19 @@ const pollutantInfoData: Record<PollutantType, PollutantInfo> = {
   [PollutantType.NO2]: {
     id: PollutantType.NO2,
     name: "NO₂",
-    fullName: "Nitrogen Dioxide",
-    description: "A reddish-brown gas with a pungent, acrid odor. It is one of a group of highly reactive gases known as nitrogen oxides (NOx).",
+    fullName: "Biossido di Azoto",
+    description: "Gas di colore rosso-bruno con odore pungente e acre. È uno di un gruppo di gas altamente reattivi noti come ossidi di azoto (NOx).",
     sources: [
-      "Vehicle emissions",
-      "Power plants",
-      "Industrial processes",
-      "Off-road equipment"
+      "Emissioni veicolari",
+      "Centrali elettriche",
+      "Processi industriali",
+      "Attrezzature fuori strada"
     ],
     healthEffects: [
-      "Airway inflammation",
-      "Reduced lung function",
-      "Increased asthma attacks",
-      "Respiratory infections"
+      "Infiammazione delle vie aeree",
+      "Riduzione della funzione polmonare",
+      "Aumento di attacchi d'asma",
+      "Infezioni respiratorie"
     ],
     limits: {
       who: 10,
@@ -81,19 +81,19 @@ const pollutantInfoData: Record<PollutantType, PollutantInfo> = {
   [PollutantType.SO2]: {
     id: PollutantType.SO2,
     name: "SO₂",
-    fullName: "Sulfur Dioxide",
-    description: "A colorless gas with a sharp odor. It is produced from burning fossil fuels containing sulfur compounds.",
+    fullName: "Biossido di Zolfo",
+    description: "Gas incolore con odore pungente. È prodotto dalla combustione di combustibili fossili contenenti composti di zolfo.",
     sources: [
-      "Fossil fuel combustion",
-      "Industrial processes",
-      "Coal-burning power plants",
-      "Volcanic eruptions"
+      "Combustione di combustibili fossili",
+      "Processi industriali",
+      "Centrali a carbone",
+      "Eruzioni vulcaniche"
     ],
     healthEffects: [
-      "Breathing difficulties",
-      "Respiratory irritation",
-      "Aggravated asthma",
-      "Contribution to particle formation with associated health effects"
+      "Difficoltà respiratorie",
+      "Irritazione respiratoria",
+      "Aggravamento dell'asma",
+      "Contributo alla formazione di particelle con effetti sulla salute"
     ],
     limits: {
       who: 40,
@@ -104,20 +104,20 @@ const pollutantInfoData: Record<PollutantType, PollutantInfo> = {
   [PollutantType.O3]: {
     id: PollutantType.O3,
     name: "O₃",
-    fullName: "Ozone",
-    description: "A gas composed of three atoms of oxygen. Ground-level ozone is a harmful air pollutant and a key component of smog.",
+    fullName: "Ozono",
+    description: "Gas composto da tre atomi di ossigeno. L'ozono a livello del suolo è un inquinante atmosferico dannoso e un componente chiave dello smog.",
     sources: [
-      "Chemical reaction of pollutants (NOx and VOCs) with sunlight",
-      "Vehicle emissions",
-      "Industrial emissions",
-      "Chemical solvents"
+      "Reazione chimica degli inquinanti (NOx e COV) con la luce solare",
+      "Emissioni veicolari",
+      "Emissioni industriali",
+      "Solventi chimici"
     ],
     healthEffects: [
-      "Throat irritation",
-      "Lung inflammation",
-      "Reduced lung function",
-      "Aggravated asthma",
-      "Permanent lung damage with repeated exposure"
+      "Irritazione alla gola",
+      "Infiammazione polmonare",
+      "Riduzione della funzione polmonare",
+      "Aggravamento dell'asma",
+      "Danni polmonari permanenti con esposizione ripetuta"
     ],
     limits: {
       who: 100,
@@ -128,21 +128,21 @@ const pollutantInfoData: Record<PollutantType, PollutantInfo> = {
   [PollutantType.CO]: {
     id: PollutantType.CO,
     name: "CO",
-    fullName: "Carbon Monoxide",
-    description: "A colorless, odorless gas that is toxic at high levels. It is produced by the incomplete burning of carbon-containing fuels.",
+    fullName: "Monossido di Carbonio",
+    description: "Gas incolore e inodore tossico ad alte concentrazioni. È prodotto dalla combustione incompleta di combustibili contenenti carbonio.",
     sources: [
-      "Vehicle exhaust",
-      "Fuel combustion",
-      "Industrial processes",
-      "Household appliances",
-      "Wildfires"
+      "Gas di scarico dei veicoli",
+      "Combustione di carburanti",
+      "Processi industriali",
+      "Elettrodomestici",
+      "Incendi"
     ],
     healthEffects: [
-      "Reduced oxygen delivery to organs",
-      "Headache and dizziness",
-      "Confusion",
-      "Unconsciousness at high concentrations",
-      "Death at very high concentrations"
+      "Riduzione del trasporto di ossigeno agli organi",
+      "Mal di testa e vertigini",
+      "Confusione",
+      "Perdita di coscienza ad alte concentrazioni",
+      "Morte a concentrazioni molto elevate"
     ],
     limits: {
       who: 4,
@@ -157,11 +157,11 @@ const InfoPanel = () => {
   
   const pollutantInfo = pollutantInfoData[selectedPollutant];
   
-  // Get the current value for the selected pollutant
+  // Ottieni il valore corrente per l'inquinante selezionato
   const currentValue = cityData?.data.pollutants[selectedPollutant]?.value;
   const unit = cityData?.data.pollutants[selectedPollutant]?.unit;
   
-  // Color style for the pollutant
+  // Stile colore per l'inquinante
   const colorStyle = { color: pollutantInfo.color };
   const badgeStyle = { backgroundColor: pollutantInfo.color };
   
@@ -183,14 +183,14 @@ const InfoPanel = () => {
         <Tabs defaultValue="info">
           <TabsList className="grid w-full grid-cols-3 mb-4">
             <TabsTrigger value="info">Info</TabsTrigger>
-            <TabsTrigger value="sources">Sources</TabsTrigger>
-            <TabsTrigger value="health">Health Effects</TabsTrigger>
+            <TabsTrigger value="sources">Fonti</TabsTrigger>
+            <TabsTrigger value="health">Effetti sulla Salute</TabsTrigger>
           </TabsList>
           
           <TabsContent value="info" className="space-y-4">
             <p>{pollutantInfo.description}</p>
             <div>
-              <p className="text-sm font-medium">WHO Guideline Limit:</p>
+              <p className="text-sm font-medium">Limite OMS consigliato:</p>
               <p className="text-sm">
                 {pollutantInfo.limits.who} {pollutantInfo.limits.unit}
               </p>

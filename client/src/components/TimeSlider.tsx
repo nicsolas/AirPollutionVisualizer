@@ -11,25 +11,25 @@ const TimeSlider = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState<Date>(new Date());
   
-  // Maximum hours we can go back in time (based on available data)
+  // Ore massime che possiamo tornare indietro nel tempo (in base ai dati disponibili)
   const maxHoursBack = 24;
   
-  // Update current time
+  // Aggiorna l'ora corrente
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentTime(new Date());
-    }, 60000); // Update every minute
+    }, 60000); // Aggiorna ogni minuto
     
     return () => clearInterval(timer);
   }, []);
   
-  // Auto-play time slider
+  // Riproduzione automatica dello slider temporale
   useEffect(() => {
     if (!isPlaying) return;
     
     const interval = setInterval(() => {
       setTimeOffset((current) => {
-        // If we reach current time, stop playback
+        // Se raggiungiamo l'ora corrente, ferma la riproduzione
         if (current >= 0) {
           setIsPlaying(false);
           return 0;
@@ -41,39 +41,39 @@ const TimeSlider = () => {
     return () => clearInterval(interval);
   }, [isPlaying, setTimeOffset]);
   
-  // Format the time label
+  // Formatta l'etichetta dell'ora
   const getTimeLabel = () => {
     if (timeOffset === 0) {
-      return "Current";
+      return "Attuale";
     }
     
     const pastTime = subHours(currentTime, Math.abs(timeOffset));
-    return format(pastTime, "h:mm a");
+    return format(pastTime, "H:mm");
   };
   
-  // Calculate the time as a human-readable string
+  // Calcola il tempo come una stringa leggibile
   const getTimeDescription = () => {
     if (timeOffset === 0) {
-      return "Current time";
+      return "Ora corrente";
     }
     
     const pastTime = subHours(currentTime, Math.abs(timeOffset));
-    return `${formatDistanceToNow(pastTime)} ago`;
+    return `${formatDistanceToNow(pastTime)} fa`;
   };
   
-  // Handle time slider change
+  // Gestisce il cambio dello slider temporale
   const handleTimeChange = (value: number[]) => {
     setTimeOffset(value[0]);
-    // Stop playback if user manually changes time
+    // Ferma la riproduzione se l'utente cambia manualmente il tempo
     setIsPlaying(false);
   };
   
-  // Toggle time playback
+  // Attiva/disattiva la riproduzione temporale
   const togglePlayback = () => {
     setIsPlaying(!isPlaying);
   };
   
-  // Reset to current time
+  // Ripristina all'ora corrente
   const resetToCurrentTime = () => {
     setTimeOffset(0);
     setIsPlaying(false);
@@ -110,7 +110,7 @@ const TimeSlider = () => {
               disabled={timeOffset === 0 || !cityData}
             >
               <SkipBack className="h-3 w-3 mr-1" />
-              Current
+              Attuale
             </Button>
             
             <Button
@@ -122,12 +122,12 @@ const TimeSlider = () => {
               {isPlaying ? (
                 <>
                   <Pause className="h-3 w-3 mr-1" />
-                  Pause
+                  Pausa
                 </>
               ) : (
                 <>
                   <Play className="h-3 w-3 mr-1" />
-                  Play
+                  Riproduci
                 </>
               )}
             </Button>

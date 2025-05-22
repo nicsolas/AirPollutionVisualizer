@@ -7,7 +7,7 @@ import { useMemo } from "react";
 const AirQualityIndex = () => {
   const { cityData, isLoading } = usePollution();
   
-  // Determine AQI level CSS classes based on current data
+  // Determina le classi CSS del livello AQI in base ai dati correnti
   const aqiDisplay = useMemo(() => {
     if (!cityData) return { level: AQILevel.Good, color: aqiColors[AQILevel.Good], value: 0 };
     
@@ -17,7 +17,7 @@ const AirQualityIndex = () => {
     return { level, color, value: aqi };
   }, [cityData]);
   
-  // Create animation style for indicator
+  // Crea lo stile di animazione per l'indicatore
   const indicatorStyle = {
     backgroundColor: aqiDisplay.color,
     boxShadow: `0 0 12px ${aqiDisplay.color}`,
@@ -27,11 +27,11 @@ const AirQualityIndex = () => {
     return (
       <Card className="min-w-[300px]">
         <CardHeader className="pb-2">
-          <CardTitle className="text-lg">Air Quality Index</CardTitle>
+          <CardTitle className="text-lg">Indice Qualità dell'Aria</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="h-24 flex items-center justify-center">
-            <p className="text-muted-foreground">Loading air quality data...</p>
+            <p className="text-muted-foreground">Caricamento dati in corso...</p>
           </div>
         </CardContent>
       </Card>
@@ -42,11 +42,11 @@ const AirQualityIndex = () => {
     return (
       <Card className="min-w-[300px]">
         <CardHeader className="pb-2">
-          <CardTitle className="text-lg">Air Quality Index</CardTitle>
+          <CardTitle className="text-lg">Indice Qualità dell'Aria</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="h-24 flex items-center justify-center">
-            <p className="text-muted-foreground">No data available</p>
+            <p className="text-muted-foreground">Nessun dato disponibile</p>
           </div>
         </CardContent>
       </Card>
@@ -56,7 +56,7 @@ const AirQualityIndex = () => {
   return (
     <Card className="min-w-[300px]">
       <CardHeader className="pb-2">
-        <CardTitle className="text-lg">Air Quality Index</CardTitle>
+        <CardTitle className="text-lg">Indice Qualità dell'Aria</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="flex flex-col items-center">
@@ -72,7 +72,7 @@ const AirQualityIndex = () => {
           
           <div className="mt-3 text-center text-sm text-muted-foreground">
             {cityData.data.dominantPollutant && (
-              <p>Primary pollutant: {cityData.data.dominantPollutant}</p>
+              <p>Inquinante principale: {cityData.data.dominantPollutant}</p>
             )}
           </div>
         </div>

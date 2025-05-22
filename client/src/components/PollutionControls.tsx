@@ -17,19 +17,19 @@ const PollutionControls = () => {
   
   const [animating, setAnimating] = useState(true);
   
-  // Toggle animation
+  // Attiva/disattiva animazione
   const toggleAnimation = () => {
     setAnimating(prev => !prev);
   };
   
-  // Toggle time of day
+  // Cambia orario (giorno/notte)
   const toggleTimeOfDay = () => {
     setVisualizationSetting('timeOfDay', 
       visualizationSettings.timeOfDay === 'day' ? 'night' : 'day'
     );
   };
   
-  // Toggle view mode
+  // Cambia modalità di visualizzazione
   const toggleViewMode = () => {
     setVisualizationSetting('viewMode',
       visualizationSettings.viewMode === 'city' ? 'room' : 'city'
@@ -39,34 +39,34 @@ const PollutionControls = () => {
   return (
     <Card className="min-w-[300px]">
       <CardHeader className="pb-2">
-        <CardTitle className="text-lg">Visualization Controls</CardTitle>
+        <CardTitle className="text-lg">Controlli Visualizzazione</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        {/* Pollutant selector */}
+        {/* Selettore inquinante */}
         <div className="space-y-2">
-          <label className="text-sm font-medium">Pollutant</label>
+          <label className="text-sm font-medium">Inquinante</label>
           <Select 
             value={selectedPollutant} 
             onValueChange={(value) => setSelectedPollutant(value as PollutantType)}
           >
             <SelectTrigger>
-              <SelectValue placeholder="Select pollutant" />
+              <SelectValue placeholder="Seleziona inquinante" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value={PollutantType.PM25}>{PollutantType.PM25} - Fine Particles</SelectItem>
-              <SelectItem value={PollutantType.PM10}>{PollutantType.PM10} - Coarse Particles</SelectItem>
-              <SelectItem value={PollutantType.NO2}>{PollutantType.NO2} - Nitrogen Dioxide</SelectItem>
-              <SelectItem value={PollutantType.SO2}>{PollutantType.SO2} - Sulfur Dioxide</SelectItem>
-              <SelectItem value={PollutantType.O3}>{PollutantType.O3} - Ozone</SelectItem>
-              <SelectItem value={PollutantType.CO}>{PollutantType.CO} - Carbon Monoxide</SelectItem>
+              <SelectItem value={PollutantType.PM25}>{PollutantType.PM25} - Particelle Fini</SelectItem>
+              <SelectItem value={PollutantType.PM10}>{PollutantType.PM10} - Particelle Grossolane</SelectItem>
+              <SelectItem value={PollutantType.NO2}>{PollutantType.NO2} - Biossido di Azoto</SelectItem>
+              <SelectItem value={PollutantType.SO2}>{PollutantType.SO2} - Biossido di Zolfo</SelectItem>
+              <SelectItem value={PollutantType.O3}>{PollutantType.O3} - Ozono</SelectItem>
+              <SelectItem value={PollutantType.CO}>{PollutantType.CO} - Monossido di Carbonio</SelectItem>
             </SelectContent>
           </Select>
         </div>
         
-        {/* Density control */}
+        {/* Controllo densità */}
         <div className="space-y-2">
           <div className="flex justify-between">
-            <label className="text-sm font-medium">Particle Density</label>
+            <label className="text-sm font-medium">Densità Particelle</label>
             <span className="text-sm text-muted-foreground">{visualizationSettings.density}%</span>
           </div>
           <Slider
@@ -78,10 +78,10 @@ const PollutionControls = () => {
           />
         </div>
         
-        {/* Size control */}
+        {/* Controllo dimensione */}
         <div className="space-y-2">
           <div className="flex justify-between">
-            <label className="text-sm font-medium">Particle Size</label>
+            <label className="text-sm font-medium">Dimensione Particelle</label>
             <span className="text-sm text-muted-foreground">{visualizationSettings.particleSize.toFixed(1)}</span>
           </div>
           <Slider
@@ -93,10 +93,10 @@ const PollutionControls = () => {
           />
         </div>
         
-        {/* Speed control */}
+        {/* Controllo velocità */}
         <div className="space-y-2">
           <div className="flex justify-between">
-            <label className="text-sm font-medium">Particle Speed</label>
+            <label className="text-sm font-medium">Velocità Particelle</label>
             <span className="text-sm text-muted-foreground">{visualizationSettings.particleSpeed.toFixed(1)}</span>
           </div>
           <Slider
@@ -108,13 +108,13 @@ const PollutionControls = () => {
           />
         </div>
         
-        {/* Quick controls */}
+        {/* Controlli rapidi */}
         <div className="pt-2 flex items-center justify-between">
           <Button 
             variant="outline" 
             size="icon" 
             onClick={toggleTimeOfDay}
-            title={visualizationSettings.timeOfDay === 'day' ? 'Switch to night mode' : 'Switch to day mode'}
+            title={visualizationSettings.timeOfDay === 'day' ? 'Passa a modalità notturna' : 'Passa a modalità diurna'}
           >
             {visualizationSettings.timeOfDay === 'day' ? (
               <Sun className="h-4 w-4" />
@@ -127,7 +127,7 @@ const PollutionControls = () => {
             variant="outline" 
             size="icon" 
             onClick={toggleViewMode}
-            title={visualizationSettings.viewMode === 'city' ? 'Switch to room view' : 'Switch to city view'}
+            title={visualizationSettings.viewMode === 'city' ? 'Passa a vista stanza' : 'Passa a vista città'}
           >
             <SwitchCamera className="h-4 w-4" />
           </Button>
@@ -136,7 +136,7 @@ const PollutionControls = () => {
             variant="outline" 
             size="icon"
             onClick={toggleAnimation}
-            title={animating ? 'Pause animation' : 'Resume animation'}
+            title={animating ? 'Metti in pausa animazione' : 'Riprendi animazione'}
           >
             {animating ? (
               <PauseCircle className="h-4 w-4" />
