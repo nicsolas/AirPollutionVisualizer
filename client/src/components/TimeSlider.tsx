@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import { Slider } from "@/components/ui/slider";
 import { usePollution } from "@/lib/stores/usePollution";
 import { Button } from "@/components/ui/button";
+import { AnimatedButton } from "@/components/ui/animated-button";
 import { Play, Pause, SkipBack, Clock } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { formatDistanceToNow, subHours, format } from "date-fns";
+import { motion } from "framer-motion";
 
 const TimeSlider = () => {
   const { timeOffset, setTimeOffset, cityData } = usePollution();
@@ -103,34 +105,40 @@ const TimeSlider = () => {
           </div>
           
           <div className="flex items-center justify-between">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={resetToCurrentTime}
-              disabled={timeOffset === 0 || !cityData}
-            >
-              <SkipBack className="h-3 w-3 mr-1" />
-              Attuale
-            </Button>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <AnimatedButton
+                variant="outline"
+                size="sm"
+                motionEffect="shine"
+                onClick={resetToCurrentTime}
+                disabled={timeOffset === 0 || !cityData}
+              >
+                <SkipBack className="h-3 w-3 mr-1" />
+                Attuale
+              </AnimatedButton>
+            </motion.div>
             
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={togglePlayback}
-              disabled={timeOffset === 0 || !cityData}
-            >
-              {isPlaying ? (
-                <>
-                  <Pause className="h-3 w-3 mr-1" />
-                  Pausa
-                </>
-              ) : (
-                <>
-                  <Play className="h-3 w-3 mr-1" />
-                  Riproduci
-                </>
-              )}
-            </Button>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <AnimatedButton
+                variant={isPlaying ? "secondary" : "outline"}
+                size="sm"
+                motionEffect={isPlaying ? "pulse" : "rotate"}
+                onClick={togglePlayback}
+                disabled={timeOffset === 0 || !cityData}
+              >
+                {isPlaying ? (
+                  <>
+                    <Pause className="h-3 w-3 mr-1" />
+                    Pausa
+                  </>
+                ) : (
+                  <>
+                    <Play className="h-3 w-3 mr-1" />
+                    Riproduci
+                  </>
+                )}
+              </AnimatedButton>
+            </motion.div>
           </div>
         </div>
       </CardContent>

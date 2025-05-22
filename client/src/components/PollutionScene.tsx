@@ -1070,37 +1070,110 @@ const CityEnvironment = ({ timeOfDay }: { timeOfDay: 'day' | 'night' }) => {
           })}
           
           {/* Luci decorative per gli edifici più importanti */}
+          {/* Grattacielo principale */}
           <spotLight
-            position={[0, 2, -10]}
+            position={[0, 5, -10]}
             angle={0.5}
-            intensity={1.5}
-            distance={20}
+            intensity={1.2}
+            distance={30}
             color="#5F85DB"
-            target-position={[0, 15, -15]}
+            castShadow={false}
+          />
+          <pointLight
+            position={[0, 15, -15]}
+            intensity={1.0}
+            distance={15}
+            color="#5F85DB"
             castShadow={false}
           />
           
+          {/* Grattacielo secondario */}
           <spotLight
-            position={[-10, 2, -20]}
-            angle={0.6}
-            intensity={1.2}
+            position={[-15, 5, -25]}
+            angle={0.5}
+            intensity={1.0}
             distance={25}
             color="#DB5F5F"
-            target-position={[-15, 12, -25]}
+            castShadow={false}
+          />
+          <pointLight
+            position={[-15, 10, -25]}
+            intensity={0.8}
+            distance={12}
+            color="#DB5F5F"
             castShadow={false}
           />
           
-          {/* Luci ambientali sparse */}
-          {Array.from({ length: 15 }).map((_, i) => {
-            const posX = (Math.random() * 60 - 30);
-            const posZ = -5 - (Math.random() * 50);
+          {/* Edificio moderno */}
+          <spotLight
+            position={[15, 5, -20]}
+            angle={0.6}
+            intensity={0.8}
+            distance={20}
+            color="#5FDBCC"
+            castShadow={false}
+          />
+          <pointLight
+            position={[15, 15, -20]}
+            intensity={0.9}
+            distance={10}
+            color="#5FDBCC"
+            castShadow={false}
+          />
+          
+          {/* Gruppo di palazzi */}
+          <pointLight
+            position={[0, 20, -40]}
+            intensity={1.2}
+            distance={35}
+            color="#FFAA55"
+            castShadow={false}
+          />
+          <pointLight
+            position={[-7, 15, -38]}
+            intensity={0.9}
+            distance={20}
+            color="#55AAFF"
+            castShadow={false}
+          />
+          <pointLight
+            position={[7, 12, -42]}
+            intensity={0.8}
+            distance={18}
+            color="#FF55AA"
+            castShadow={false}
+          />
+          
+          {/* Luci ambientali sparse - più alte e visibili sui palazzi */}
+          {Array.from({ length: 12 }).map((_, i) => {
+            // Distribuzione più strategica delle luci
+            let posX, posY, posZ;
+            
+            // Posiziona le luci su gruppi di edifici ben definiti
+            if (i < 4) {
+              // Luci per il centro città
+              posX = (i % 2) * 15 - 7.5;
+              posY = 10 + Math.random() * 10;
+              posZ = -15 + (Math.floor(i / 2) * 10 - 5);
+            } else if (i < 8) {
+              // Luci per i grattacieli in fondo
+              posX = ((i - 4) % 2) * 24 - 12;
+              posY = 15 + Math.random() * 15;
+              posZ = -30 - Math.random() * 10;
+            } else {
+              // Luci per zone residenziali
+              posX = (Math.random() > 0.5 ? 1 : -1) * (15 + Math.random() * 15);
+              posY = 3 + Math.random() * 5;
+              posZ = -10 - Math.random() * 30;
+            }
+            
             return (
               <pointLight 
-                key={`ambientlight-${i}`} 
-                position={[posX, 1 + Math.random() * 2, posZ]} 
-                intensity={0.4} 
-                distance={8} 
-                color={Math.random() > 0.7 ? "#FFF5E0" : Math.random() > 0.5 ? "#FFE0CC" : "#E0CCFF"} 
+                key={`buildinglight-${i}`} 
+                position={[posX, posY, posZ]} 
+                intensity={0.7} 
+                distance={15} 
+                color={i % 3 === 0 ? "#FFF5E0" : i % 3 === 1 ? "#FFE0CC" : "#E0CCFF"} 
                 castShadow={false}
               />
             );
@@ -1117,7 +1190,7 @@ const CityEnvironment = ({ timeOfDay }: { timeOfDay: 'day' | 'night' }) => {
             ];
             
             return (
-              <group key={`carlight-${i}`} position={position}>
+              <group key={`carlight-${i}`} position={[position[0], position[1], position[2]]}>
                 <pointLight
                   intensity={0.8}
                   distance={10}
@@ -1135,6 +1208,31 @@ const CityEnvironment = ({ timeOfDay }: { timeOfDay: 'day' | 'night' }) => {
               </group>
             );
           })}
+          
+          {/* Riflettori che illuminano la parte superiore degli edifici più alti */}
+          <group>
+            <spotLight
+              position={[-30, 2, -15]}
+              angle={0.3}
+              intensity={0.7}
+              penumbra={0.2}
+              distance={70}
+              color="#FFFFFF"
+              castShadow={false}
+            />
+          </group>
+          
+          <group>
+            <spotLight
+              position={[30, 2, -15]}
+              angle={0.3}
+              intensity={0.7}
+              penumbra={0.2}
+              distance={70} 
+              color="#FFFFFF"
+              castShadow={false}
+            />
+          </group>
         </>
       )}
     </>

@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { usePollution } from "@/lib/stores/usePollution";
 import { Button } from "@/components/ui/button";
+import { AnimatedButton } from "@/components/ui/animated-button";
 import CitySelector from "@/components/CitySelector";
 import AirQualityIndex from "@/components/AirQualityIndex";
 import PollutionControls from "@/components/PollutionControls";
@@ -13,6 +14,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { CityPollutionData } from "@/lib/types";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const Home = () => {
   const { 
@@ -76,12 +78,12 @@ const Home = () => {
           <PollutionControls />
           <InfoPanel />
           
-          <Button asChild className="mt-auto">
+          <AnimatedButton asChild motionEffect="bounce" variant="gradient" className="mt-auto">
             <Link to="/pollutants">
               Scopri di più sugli inquinanti
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
-          </Button>
+          </AnimatedButton>
         </div>
       </div>
     </div>
