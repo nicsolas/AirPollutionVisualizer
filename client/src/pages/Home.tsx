@@ -43,7 +43,8 @@ const Home = () => {
   }, [data, isLoading, error, setCityData, setError, setLoading]);
   
   return (
-    <div className="container mx-auto px-4 py-6 flex flex-col min-h-[calc(100vh-4rem)]">
+    <div className="container mx-auto px-4 py-6 flex flex-col min-h-[calc(100vh-4rem)] relative">
+      <PageScroller />
       {/* Aggiungiamo il componente di scorrimento pagina */}
       <PageScroller />
       
