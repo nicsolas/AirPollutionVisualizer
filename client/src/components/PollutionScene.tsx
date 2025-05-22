@@ -4,6 +4,7 @@ import { Suspense, useRef, useState, useEffect } from "react";
 import { usePollution } from "@/lib/stores/usePollution";
 import ParticleSystem from "./ParticleSystem";
 import { useAudio } from "@/lib/stores/useAudio";
+import { pollutantColors } from "@/lib/utils/colors";
 import * as THREE from "three";
 
 // City environment model
@@ -366,6 +367,19 @@ const RoomEnvironment = ({ timeOfDay }: { timeOfDay: 'day' | 'night' }) => {
   );
 };
 
+const SimpleCube = () => {
+  // Cubo semplice colorato in base all'inquinante
+  const { selectedPollutant } = usePollution();
+  const color = pollutantColors[selectedPollutant];
+  
+  return (
+    <mesh position={[0, 0, 0]}>
+      <boxGeometry args={[1, 1, 1]} />
+      <meshStandardMaterial color={color} />
+    </mesh>
+  );
+};
+
 const PollutionScene = () => {
   const { visualizationSettings, cityData, selectedPollutant } = usePollution();
   const { playHit } = useAudio();
@@ -377,25 +391,21 @@ const PollutionScene = () => {
   // Normalize to a 0-1 scale for visualization intensity
   const normalizedLevel = Math.min(1.0, pollutionLevel / 100);
   
-  // Adjust particle count based on density setting and pollution level
+  // Adjust particle count based on density setting and pollution level - ridotto per semplificare
   const particleCount = Math.floor(
-    200 * (visualizationSettings.density / 100) * (0.5 + normalizedLevel)
+    50 * (visualizationSettings.density / 100) * (0.5 + normalizedLevel)
   );
   
-  // Set camera position based on view mode
+  // Set camera position - più vicina e semplificata
   useEffect(() => {
     if (!controlsRef.current) return;
     
-    if (visualizationSettings.viewMode === 'city') {
-      controlsRef.current.object.position.set(15, 15, 15);
-      controlsRef.current.target.set(0, 0, -10);
-    } else {
-      controlsRef.current.object.position.set(0, 2, 3);
-      controlsRef.current.target.set(0, 1, 0);
-    }
+    // Posizionamento fisso della camera più vicino
+    controlsRef.current.object.position.set(3, 3, 3);
+    controlsRef.current.target.set(0, 0, 0);
     
     controlsRef.current.update();
-  }, [visualizationSettings.viewMode]);
+  }, []);
   
   // Play sound on significant pollution level change
   useEffect(() => {
@@ -407,13 +417,20 @@ const PollutionScene = () => {
   
   return (
     <div className="h-full w-full">
-      <Canvas shadows camera={{ position: [15, 15, 15], fov: 50 }}>
+      <Canvas shadows camera={{ position: [3, 3, 3], fov: 40 }}>
         <Suspense fallback={null}>
-          {visualizationSettings.viewMode === 'city' ? (
-            <CityEnvironment timeOfDay={visualizationSettings.timeOfDay} />
-          ) : (
-            <RoomEnvironment timeOfDay={visualizationSettings.timeOfDay} />
-          )}
+          {/* Ambiente semplificato */}
+          <ambientLight intensity={0.6} />
+          <directionalLight position={[5, 5, 5]} intensity={0.8} castShadow />
+          
+          {/* Ground piano */}
+          <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.5, 0]} receiveShadow>
+            <planeGeometry args={[4, 4]} />
+            <meshStandardMaterial color="#f0f0f0" />
+          </mesh>
+          
+          {/* Visualizzazione semplificata - solo un cubo e poche particelle */}
+          <SimpleCube />
           
           <ParticleSystem 
             count={particleCount}
@@ -425,13 +442,15 @@ const PollutionScene = () => {
           
           <OrbitControls 
             ref={controlsRef}
-            enablePan={true}
+            enablePan={false}
             enableZoom={true}
             enableRotate={true}
-            minDistance={1}
-            maxDistance={50}
-            minPolarAngle={0}
-            maxPolarAngle={Math.PI / 2}
+            minDistance={1.5}
+            maxDistance={5}
+            minPolarAngle={0.1}
+            maxPolarAngle={Math.PI / 2 - 0.1}
+            autoRotate={true}
+            autoRotateSpeed={1}
           />
         </Suspense>
       </Canvas>

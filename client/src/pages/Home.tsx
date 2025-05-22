@@ -56,33 +56,32 @@ const Home = () => {
         <CitySelector />
       </div>
       
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6 flex-grow">
-        {/* Area di visualizzazione principale */}
-        <div className="lg:col-span-2 flex flex-col">
-          <Card className="flex-grow overflow-hidden">
-            <CardContent className="p-0 h-[50vh] lg:h-full">
+      <div className="grid grid-cols-1 gap-6 mb-6 flex-grow">
+        <div className="flex flex-col md:flex-row gap-6">
+          {/* Area di visualizzazione principale ridotta */}
+          <Card className="w-full md:w-[350px] h-[350px] flex-shrink-0">
+            <CardContent className="p-0 h-full w-full">
               <PollutionScene />
             </CardContent>
           </Card>
           
-          <div className="mt-4">
+          {/* Controlli e informazioni */}
+          <div className="flex flex-col gap-6 flex-grow">
+            <AirQualityIndex />
             <TimeSlider />
+            <PollutionControls />
           </div>
         </div>
         
-        {/* Controlli e informazioni */}
-        <div className="flex flex-col gap-6">
-          <AirQualityIndex />
-          <PollutionControls />
-          <InfoPanel />
-          
-          <Button asChild className="mt-auto">
-            <Link to="/pollutants">
-              Scopri di più sugli inquinanti
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
-        </div>
+        {/* Informazioni inquinanti */}
+        <InfoPanel />
+        
+        <Button asChild className="w-full md:w-auto">
+          <Link to="/pollutants">
+            Scopri di più sugli inquinanti
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Link>
+        </Button>
       </div>
     </div>
   );
