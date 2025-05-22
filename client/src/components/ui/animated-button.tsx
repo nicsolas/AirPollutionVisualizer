@@ -32,6 +32,7 @@ const buttonVariants = cva(
         pulse: "animate-pulse",
         bounce: "animate-bounce",
         spin: "animate-spin",
+        wiggle: "animate-wiggle",
       },
     },
     defaultVariants: {
@@ -58,7 +59,7 @@ export interface AnimatedButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
-  motionEffect?: "scale" | "rotate" | "bounce" | "shine" | "none";
+  motionEffect?: "scale" | "rotate" | "bounce" | "shine" | "pulse" | "none";
 }
 
 const AnimatedButton = React.forwardRef<HTMLButtonElement, AnimatedButtonProps>(

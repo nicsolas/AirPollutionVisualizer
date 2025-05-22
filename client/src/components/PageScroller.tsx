@@ -109,6 +109,8 @@ const PageScroller = () => {
   const handleProgressBarClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (typeof window !== 'undefined') {
       const bar = e.currentTarget;
+      if (!bar) return;
+      
       const rect = bar.getBoundingClientRect();
       const clickY = e.clientY - rect.top;
       const percentage = clickY / rect.height;
@@ -169,7 +171,9 @@ const PageScroller = () => {
           dragElastic={0}
           dragMomentum={false}
           onDrag={(e, info) => {
-            const bar = e.currentTarget.parentElement;
+            // Usa e.target invece di e.currentTarget.parentElement
+            const parentElement = e.target as HTMLElement;
+            const bar = parentElement.closest('div[class*="h-[60vh]"]');
             if (!bar) return;
             
             const rect = bar.getBoundingClientRect();
