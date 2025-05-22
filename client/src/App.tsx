@@ -18,32 +18,32 @@ function App() {
   const { setBackgroundMusic, setHitSound, setSuccessSound } = useAudio();
   const initialized = useRef(false);
   
-  // Load audio for application - only once on mount
+  // Carica l'audio per l'applicazione - solo una volta all'avvio
   useEffect(() => {
-    // Prevent re-initialization
+    // Previene la reinizializzazione
     if (initialized.current) return;
     initialized.current = true;
     
-    // Background music setup (will be muted by default)
+    // Configurazione musica di sottofondo (sarà silenziata di default)
     const backgroundMusic = new Audio("/sounds/background.mp3");
     backgroundMusic.loop = true;
     backgroundMusic.volume = 0.3;
     
-    // Sound effects
+    // Effetti sonori
     const hitSound = new Audio("/sounds/hit.mp3");
     const successSound = new Audio("/sounds/success.mp3");
     
-    // Setup audio in store
+    // Configura l'audio nello store
     setBackgroundMusic(backgroundMusic);
     setHitSound(hitSound);
     setSuccessSound(successSound);
     
-    // Start background music (will be muted based on store state)
+    // Avvia la musica di sottofondo (sarà silenziata in base allo stato dello store)
     backgroundMusic.play().catch(error => {
-      console.log("Auto-play prevented:", error);
+      console.log("Riproduzione automatica impedita:", error);
     });
     
-    // Cleanup when component unmounts
+    // Pulizia quando il componente viene smontato
     return () => {
       backgroundMusic.pause();
       backgroundMusic.currentTime = 0;
@@ -55,7 +55,7 @@ function App() {
       <NavBar />
       
       <main className="flex-1">
-        <Suspense fallback={<div className="p-8 text-center">Loading...</div>}>
+        <Suspense fallback={<div className="p-8 text-center">Caricamento in corso...</div>}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />

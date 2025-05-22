@@ -14,17 +14,17 @@ const CitySelector = () => {
   const { selectedCity, setSelectedCity } = usePollution();
   const [searchTerm, setSearchTerm] = useState("");
   
-  // Fetch cities from API
+  // Recupera le città dall'API
   const { data: cities, isLoading, error } = useQuery<City[]>({
     queryKey: ["/api/cities"],
   });
   
-  // Handle city selection
+  // Gestisce la selezione della città
   const handleCityChange = (cityId: string) => {
     setSelectedCity(cityId);
   };
   
-  // Find currently selected city
+  // Trova la città attualmente selezionata
   const currentCity = cities?.find(city => city.id === selectedCity);
   
   if (isLoading) {
@@ -32,7 +32,7 @@ const CitySelector = () => {
       <div className="relative w-full max-w-md">
         <Select disabled>
           <SelectTrigger>
-            <SelectValue placeholder="Loading cities..." />
+            <SelectValue placeholder="Caricamento città in corso..." />
           </SelectTrigger>
         </Select>
       </div>
@@ -44,7 +44,7 @@ const CitySelector = () => {
       <div className="relative w-full max-w-md">
         <Select disabled>
           <SelectTrigger className="border-destructive">
-            <SelectValue placeholder="Failed to load cities" />
+            <SelectValue placeholder="Impossibile caricare le città" />
           </SelectTrigger>
         </Select>
       </div>
@@ -55,8 +55,8 @@ const CitySelector = () => {
     <div className="relative w-full max-w-md">
       <Select value={selectedCity} onValueChange={handleCityChange}>
         <SelectTrigger className="w-full">
-          <SelectValue placeholder="Select a city">
-            {currentCity ? `${currentCity.name}, ${currentCity.country}` : "Select a city"}
+          <SelectValue placeholder="Seleziona una città">
+            {currentCity ? `${currentCity.name}, ${currentCity.country}` : "Seleziona una città"}
           </SelectValue>
         </SelectTrigger>
         <SelectContent>

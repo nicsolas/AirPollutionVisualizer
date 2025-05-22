@@ -22,18 +22,18 @@ const Home = () => {
     setLoading 
   } = usePollution();
   
-  // Fetch pollution data for selected city
+  // Ottiene i dati sull'inquinamento per la città selezionata
   const { data, isLoading, error } = useQuery<CityPollutionData>({
     queryKey: [`/api/pollution/${selectedCity}?offset=${timeOffset}`],
     enabled: selectedCity !== "",
   });
   
-  // Update store when data changes
+  // Aggiorna lo store quando cambiano i dati
   useEffect(() => {
     setLoading(isLoading);
     
     if (error) {
-      setError(error instanceof Error ? error.message : "Failed to fetch pollution data");
+      setError(error instanceof Error ? error.message : "Impossibile recuperare i dati sull'inquinamento");
     } else if (data) {
       setCityData(data);
     }
@@ -43,9 +43,9 @@ const Home = () => {
     <div className="container mx-auto px-4 py-6 flex flex-col min-h-[calc(100vh-4rem)]">
       <div className="mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold mb-2">Air Pollution Visualization</h1>
+          <h1 className="text-3xl font-bold mb-2">Visualizzazione Inquinamento Atmosferico</h1>
           <p className="text-muted-foreground">
-            Explore air pollution data in an interactive 3D environment
+            Esplora i dati sull'inquinamento atmosferico in un ambiente 3D interattivo
           </p>
         </div>
         
@@ -53,7 +53,7 @@ const Home = () => {
       </div>
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6 flex-grow">
-        {/* Main visualization area */}
+        {/* Area di visualizzazione principale */}
         <div className="lg:col-span-2 flex flex-col">
           <Card className="flex-grow overflow-hidden">
             <CardContent className="p-0 h-[50vh] lg:h-full">
@@ -66,7 +66,7 @@ const Home = () => {
           </div>
         </div>
         
-        {/* Controls and information */}
+        {/* Controlli e informazioni */}
         <div className="flex flex-col gap-6">
           <AirQualityIndex />
           <PollutionControls />
@@ -74,7 +74,7 @@ const Home = () => {
           
           <Button asChild className="mt-auto">
             <Link to="/pollutants">
-              Learn more about pollutants
+              Scopri di più sugli inquinanti
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>

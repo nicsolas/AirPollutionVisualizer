@@ -13,7 +13,7 @@ const NavBar = () => {
       <div className="container flex h-16 items-center px-4 sm:px-6">
         <div className="mr-4 flex items-center gap-2">
           <Wind className="h-6 w-6 text-primary" />
-          <span className="hidden font-bold sm:inline-block">Air Pollution Visualizer</span>
+          <span className="hidden font-bold sm:inline-block">Visualizzatore Inquinamento Atmosferico</span>
         </div>
         
         <nav className="flex flex-1 items-center justify-between">
@@ -44,7 +44,7 @@ const NavBar = () => {
             >
               <Link to="/pollutants">
                 <Wind className="mr-2 h-4 w-4" />
-                <span>Pollutants</span>
+                <span>Inquinanti</span>
               </Link>
             </Button>
             
@@ -59,7 +59,7 @@ const NavBar = () => {
             >
               <Link to="/about">
                 <Info className="mr-2 h-4 w-4" />
-                <span>About</span>
+                <span>Info</span>
               </Link>
             </Button>
           </div>
@@ -68,7 +68,7 @@ const NavBar = () => {
             variant="ghost"
             size="icon"
             onClick={toggleMute}
-            aria-label={isMuted ? "Unmute" : "Mute"}
+            aria-label={isMuted ? "Attiva audio" : "Disattiva audio"}
             className="text-muted-foreground hover:text-foreground"
           >
             {isMuted ? (
