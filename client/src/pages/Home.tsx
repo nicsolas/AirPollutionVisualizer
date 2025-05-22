@@ -8,6 +8,7 @@ import PollutionControls from "@/components/PollutionControls";
 import PollutionScene from "@/components/PollutionScene";
 import InfoPanel from "@/components/InfoPanel";
 import TimeSlider from "@/components/TimeSlider";
+import PageScroller from "@/components/PageScroller";
 import { Card, CardContent } from "@/components/ui/card";
 import { CityPollutionData } from "@/lib/types";
 import { ArrowRight } from "lucide-react";
@@ -41,6 +42,9 @@ const Home = () => {
   
   return (
     <div className="container mx-auto px-4 py-6 flex flex-col min-h-[calc(100vh-4rem)]">
+      {/* Aggiungiamo il componente di scorrimento pagina */}
+      <PageScroller />
+      
       <div className="mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold mb-2">Visualizzazione Inquinamento Atmosferico</h1>

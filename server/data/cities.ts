@@ -3,6 +3,24 @@ import { City } from "@shared/types";
 // List of cities with pollution data available
 const cities: City[] = [
   {
+    id: "milan",
+    name: "Milano",
+    country: "Italia",
+    coordinates: {
+      lat: 45.4642,
+      lng: 9.1900
+    }
+  },
+  {
+    id: "rome",
+    name: "Roma",
+    country: "Italia",
+    coordinates: {
+      lat: 41.9028,
+      lng: 12.4964
+    }
+  },
+  {
     id: "london",
     name: "London",
     country: "United Kingdom",

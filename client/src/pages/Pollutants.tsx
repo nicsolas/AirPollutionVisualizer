@@ -5,6 +5,7 @@ import { PollutantType, PollutantInfo } from "@/lib/types";
 import { pollutantColors } from "@/lib/utils/colors";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
+import PageScroller from "@/components/PageScroller";
 
 // Database informazioni inquinanti - uguale a InfoPanel.tsx
 const pollutantInfoData: Record<PollutantType, PollutantInfo> = {
@@ -161,6 +162,9 @@ const Pollutants = () => {
   
   return (
     <div className="container mx-auto px-4 py-8 pb-24">
+      {/* Aggiungiamo il componente di scorrimento pagina */}
+      <PageScroller />
+      
       <div className="flex items-center mb-6">
         <Link to="/" className="mr-4 text-muted-foreground hover:text-foreground">
           <ArrowLeft className="h-5 w-5" />
