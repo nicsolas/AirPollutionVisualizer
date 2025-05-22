@@ -850,7 +850,7 @@ const CityEnvironment = ({ timeOfDay }: { timeOfDay: 'day' | 'night' }) => {
         <mesh rotation={[-Math.PI / 2, Math.PI / 2, 0]} position={[0, 0.01, -15]} receiveShadow>
           <planeGeometry args={[80, 12]} />
           <meshStandardMaterial 
-            color="#111"```text
+            color="#111"
             roughness={0.9}
           />
         </mesh>
