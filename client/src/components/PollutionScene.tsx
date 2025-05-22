@@ -118,97 +118,10 @@ const CityEnvironment = ({ timeOfDay }: { timeOfDay: 'day' | 'night' }) => {
       }
     }
 
-    // Add windows for all building types
-    const addWindows = () => {
-      // Window pattern based on building style and size
-      const windowSize = style === 'modern' ? 0.3 : 0.2;
-      const windowSpacing = style === 'modern' ? 0.5 : 0.4;
-      const windowDepth = 0.05;
+    // Empty function for windows (removed)
+    const addWindows = () => {};
 
-      // Calculate window arrangement - start windows from lower position
-      const windowsPerRow = Math.floor((width - 0.4) / windowSpacing);
-      const windowsPerColumn = Math.floor((height - 3) / windowSpacing); // Reduced number of windows
-
-      // Create window materials
-      const windowMaterial = new THREE.MeshStandardMaterial({ 
-        color: isDaytime ? "#E8F4FF" : "#FFFDCF", 
-        emissive: isDaytime ? "#FFFFFF" : "#FFFDCF", 
-        emissiveIntensity: isDaytime ? 0.1 : 0.8,
-        roughness: 0.1,
-        metalness: 0.5
-      });
-
-      // Window frame material
-      const frameMaterial = new THREE.MeshStandardMaterial({
-        color: style === 'modern' ? "#444444" : "#8B4513",
-        roughness: 0.8
-      });
-
-      for (let x = 0; x < windowsPerRow; x++) {
-        for (let y = 0; y < windowsPerColumn; y++) {
-          // Randomize window presence (some areas don't have windows)
-          if (Math.random() > (style === 'industrial' ? 0.7 : 0.2)) {
-            // Window frame first (slightly bigger than the window)
-            const frameSize = windowSize + 0.05;
-
-            // Front face windows
-            const windowGroup = new THREE.Group();
-
-            // Frame
-            const frame = new THREE.Mesh(
-              new THREE.BoxGeometry(frameSize, frameSize, windowDepth),
-              frameMaterial
-            );
-            windowGroup.add(frame);
-
-            // Window glass (only if it's not turned off)
-            if (isDaytime || Math.random() > 0.3) {
-              const glass = new THREE.Mesh(
-                new THREE.PlaneGeometry(windowSize, windowSize),
-                windowMaterial
-              );
-              glass.position.z = windowDepth / 2 + 0.001;
-              windowGroup.add(glass);
-            }
-
-            // Position the window - starting lower on the building
-              windowGroup.position.set(
-                (x * windowSpacing) - (width / 2) + (windowSize / 2) + (windowSpacing / 2),
-                (y * windowSpacing) + (windowSize / 2) + 2.5, // Start from 2.5 height
-                depth / 2 + 0.01 // Slightly in front
-              );
-
-            buildingGroup.add(windowGroup);
-
-            // Back side windows
-            const windowGroupBack = windowGroup.clone();
-            windowGroupBack.rotation.y = Math.PI;
-            windowGroupBack.position.z = -depth / 2 - 0.01;
-            buildingGroup.add(windowGroupBack);
-
-            // Side windows if building is wide enough
-            if (depth > 4) {
-              // Don't put windows on all sides for industrial buildings
-              if (style !== 'industrial' || Math.random() > 0.5) {
-                const windowGroupSide = windowGroup.clone();
-                windowGroupSide.rotation.y = Math.PI / 2;
-                windowGroupSide.position.x = width / 2 + 0.01;
-                windowGroupSide.position.z = (x * windowSpacing) - (depth / 2) + windowSize;
-                buildingGroup.add(windowGroupSide);
-
-                const windowGroupSide2 = windowGroup.clone();
-                windowGroupSide2.rotation.y = -Math.PI / 2;
-                windowGroupSide2.position.x = -width / 2 - 0.01;
-                windowGroupSide2.position.z = (x * windowSpacing) - (depth / 2) + windowSize;
-                buildingGroup.add(windowGroupSide2);
-              }
-            }
-          }
-        }
-      }
-    };
-
-    // Add architectural details specific to each style
+    // Apply only details
     const addDetails = () => {
       if (style === 'modern' && height > 10) {
         // Add antenna or communication equipment to modern skyscrapers
@@ -349,7 +262,6 @@ const CityEnvironment = ({ timeOfDay }: { timeOfDay: 'day' | 'night' }) => {
     };
 
     // Apply windows and details
-    addWindows();
     addDetails();
 
     return buildingGroup;
@@ -943,6 +855,7 @@ const CityEnvironment = ({ timeOfDay }: { timeOfDay: 'day' | 'night' }) => {
         receiveShadow
       />
 
+```
       {/* Posiziona semafori alle intersezioni principali */}
       {[
         [6, -9], [6, -21], [-6, -9], [-6, -21],
