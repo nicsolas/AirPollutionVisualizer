@@ -8,70 +8,228 @@ import * as THREE from "three";
 
 // City environment model
 const CityEnvironment = ({ timeOfDay }: { timeOfDay: 'day' | 'night' }) => {
-  // Simple city representation
+  // Rappresentazione della città
   const isDaytime = timeOfDay === 'day';
+  
+  // Crea un colore del cielo in base all'ora del giorno
+  const skyColor = isDaytime ? new THREE.Color("#87CEEB") : new THREE.Color("#0C1445");
+  
+  // Genera dettagli per gli edifici
+  const createWindowPattern = (width: number, height: number, depth: number, color: string) => {
+    // Aggiunge pattern finestre
+    const material = new THREE.MeshStandardMaterial({ color });
+    const buildingGroup = new THREE.Group();
+    
+    // Building base
+    const buildingMesh = new THREE.Mesh(
+      new THREE.BoxGeometry(width, height, depth),
+      material
+    );
+    buildingGroup.add(buildingMesh);
+    
+    // Add windows only during night time for light effect
+    if (!isDaytime) {
+      // Window pattern based on building size
+      const windowSize = 0.2;
+      const windowSpacing = 0.4;
+      const windowsPerRow = Math.floor((width - 0.4) / windowSpacing);
+      const windowsPerColumn = Math.floor((height - 1) / windowSpacing); // No windows at the bottom floor
+      
+      // Create window pattern
+      const windowMaterial = new THREE.MeshStandardMaterial({ 
+        color: "#FFFDCF", 
+        emissive: "#FFFDCF", 
+        emissiveIntensity: 0.8 
+      });
+      
+      for (let x = 0; x < windowsPerRow; x++) {
+        for (let y = 0; y < windowsPerColumn; y++) {
+          // Randomize window lighting (some windows are off)
+          if (Math.random() > 0.3) {
+            // Window on front face
+            const windowMesh = new THREE.Mesh(
+              new THREE.PlaneGeometry(windowSize, windowSize),
+              windowMaterial
+            );
+            windowMesh.position.set(
+              (x * windowSpacing) - (width / 2) + (windowSize / 2) + (windowSpacing / 2),
+              (y * windowSpacing) + (windowSize / 2) + 0.5, // Start from 0.5 height
+              depth / 2 + 0.01 // Slightly in front
+            );
+            buildingGroup.add(windowMesh);
+            
+            // Window on back face
+            const windowMeshBack = windowMesh.clone();
+            windowMeshBack.rotation.y = Math.PI;
+            windowMeshBack.position.z = -depth / 2 - 0.01;
+            buildingGroup.add(windowMeshBack);
+            
+            // Windows on side faces if building is wide enough
+            if (depth > 5) {
+              const windowMeshSide = windowMesh.clone();
+              windowMeshSide.rotation.y = Math.PI / 2;
+              windowMeshSide.position.x = width / 2 + 0.01;
+              windowMeshSide.position.z = (x * windowSpacing) - (depth / 2) + windowSize;
+              buildingGroup.add(windowMeshSide);
+              
+              const windowMeshSide2 = windowMesh.clone();
+              windowMeshSide2.rotation.y = -Math.PI / 2;
+              windowMeshSide2.position.x = -width / 2 - 0.01;
+              windowMeshSide2.position.z = (x * windowSpacing) - (depth / 2) + windowSize;
+              buildingGroup.add(windowMeshSide2);
+            }
+          }
+        }
+      }
+    }
+    
+    return buildingGroup;
+  };
   
   return (
     <>
-      {/* Ground plane */}
+      {/* Piano del terreno con griglia stradale */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.1, 0]} receiveShadow>
         <planeGeometry args={[100, 100]} />
         <meshStandardMaterial color="#222" />
       </mesh>
       
-      {/* Buildings (just simple boxes) */}
+      {/* Edifici principali (nel centro città) */}
       <group>
-        {/* Center buildings */}
-        <mesh position={[-5, 2, -10]} castShadow receiveShadow>
-          <boxGeometry args={[4, 4, 4]} />
-          <meshStandardMaterial color="#334455" />
-        </mesh>
+        {/* Palazzo centrale - grattacielo principale */}
+        <primitive 
+          object={createWindowPattern(6, 18, 6, "#334455")} 
+          position={[0, 9, -15]}
+          castShadow 
+          receiveShadow
+        />
         
-        <mesh position={[3, 3.5, -8]} castShadow receiveShadow>
-          <boxGeometry args={[3, 7, 3]} />
-          <meshStandardMaterial color="#445566" />
-        </mesh>
+        {/* Edifici del centro */}
+        <primitive 
+          object={createWindowPattern(5, 12, 5, "#3A4C5F")} 
+          position={[-8, 6, -10]}
+          castShadow 
+          receiveShadow
+        />
         
-        <mesh position={[0, 5, -15]} castShadow receiveShadow>
-          <boxGeometry args={[4, 10, 4]} />
-          <meshStandardMaterial color="#556677" />
-        </mesh>
+        <primitive 
+          object={createWindowPattern(4, 14, 4, "#445566")} 
+          position={[7, 7, -12]}
+          castShadow 
+          receiveShadow
+        />
         
-        {/* Surrounding buildings */}
-        {Array.from({ length: 15 }).map((_, i) => {
-          // Use predetermined positions rather than random for consistency
-          const posX = [12, -10, 8, -15, 18, -5, 14, -20, 24, -18, 6, -8, 20, -12, 16][i];
-          const posZ = [-20, -18, -25, -30, -15, -22, -33, -14, -26, -35, -16, -28, -12, -24, -10][i];
-          const height = [3, 6, 8, 4, 7, 9, 5, 8, 3, 6, 4, 7, 5, 9, 4][i];
+        <primitive 
+          object={createWindowPattern(8, 6, 8, "#556677")} 
+          position={[0, 3, -5]}
+          castShadow 
+          receiveShadow
+        />
+        
+        {/* Edifici più piccoli intorno */}
+        <primitive 
+          object={createWindowPattern(3, 8, 3, "#445570")} 
+          position={[-12, 4, -18]}
+          castShadow 
+          receiveShadow
+        />
+        
+        <primitive 
+          object={createWindowPattern(4, 10, 4, "#3C4E68")} 
+          position={[12, 5, -20]}
+          castShadow 
+          receiveShadow
+        />
+        
+        {/* Edifici extra aggiunti */}
+        <primitive 
+          object={createWindowPattern(4, 9, 4, "#506072")} 
+          position={[-15, 4.5, -25]}
+          castShadow 
+          receiveShadow
+        />
+        
+        <primitive 
+          object={createWindowPattern(5, 16, 5, "#3E4C5A")} 
+          position={[15, 8, -25]}
+          castShadow 
+          receiveShadow
+        />
+        
+        <primitive 
+          object={createWindowPattern(7, 5, 7, "#4A5A6A")} 
+          position={[8, 2.5, 2]}
+          castShadow 
+          receiveShadow
+        />
+        
+        <primitive 
+          object={createWindowPattern(6, 7, 6, "#4D5D6D")} 
+          position={[-10, 3.5, 0]}
+          castShadow 
+          receiveShadow
+        />
+        
+        {/* Edifici residenziali più bassi */}
+        {Array.from({ length: 20 }).map((_, i) => {
+          // Usa posizioni predeterminate per coerenza
+          const gridSize = 5; // Distanza tra gli edifici
+          const gridX = Math.floor(i / 4) - 2; // Disposizione a griglia
+          const gridZ = (i % 4) - 2;
+          
+          // Posiziona gli edifici in modo da non sovrapporsi a quelli principali
+          const posX = gridX * gridSize * 2 + (Math.random() * 2 - 1);
+          const posZ = -30 - gridZ * gridSize + (Math.random() * 2 - 1); // Dietro gli edifici principali
+          
+          // Varia le altezze per un aspetto più realistico
+          const height = 3 + Math.floor(Math.random() * 4);
+          const width = 2 + Math.random() * 2;
+          const depth = 2 + Math.random() * 2;
+          
+          // Colori variabili per gli edifici residenziali
+          const colorHue = 210 + (Math.random() * 20 - 10);
+          const colorSat = 10 + Math.random() * 20;
+          const colorLight = 30 + Math.random() * 20;
           
           return (
-            <mesh 
-              key={i} 
-              position={[posX, height / 2, posZ]} 
+            <primitive 
+              key={`residential-${i}`}
+              object={createWindowPattern(width, height, depth, `hsl(${colorHue}, ${colorSat}%, ${colorLight}%)`)}
+              position={[posX, height/2, posZ]}
               castShadow 
               receiveShadow
-            >
-              <boxGeometry args={[3, height, 3]} />
-              <meshStandardMaterial 
-                color={`hsl(210, ${10 + i * 2}%, ${30 + i * 2}%)`} 
-              />
-            </mesh>
+            />
           );
         })}
         
-        {/* Roads */}
-        <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.01, -14]} receiveShadow>
-          <planeGeometry args={[40, 5]} />
+        {/* Strade principali */}
+        <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.01, -15]} receiveShadow>
+          <planeGeometry args={[60, 8]} />
           <meshStandardMaterial color="#111" />
         </mesh>
         
-        <mesh rotation={[-Math.PI / 2, Math.PI / 2, 0]} position={[0, 0.01, -14]} receiveShadow>
-          <planeGeometry args={[40, 5]} />
+        <mesh rotation={[-Math.PI / 2, Math.PI / 2, 0]} position={[0, 0.01, -15]} receiveShadow>
+          <planeGeometry args={[60, 8]} />
           <meshStandardMaterial color="#111" />
         </mesh>
+        
+        {/* Strade secondarie */}
+        {[-10, 10].map((offset, i) => (
+          <mesh key={`road-h-${i}`} rotation={[-Math.PI / 2, 0, 0]} position={[offset, 0.01, -15]} receiveShadow>
+            <planeGeometry args={[4, 40]} />
+            <meshStandardMaterial color="#1A1A1A" />
+          </mesh>
+        ))}
+        
+        {[-25, -5, 5].map((offset, i) => (
+          <mesh key={`road-v-${i}`} rotation={[-Math.PI / 2, Math.PI / 2, 0]} position={[0, 0.01, offset]} receiveShadow>
+            <planeGeometry args={[4, 50]} />
+            <meshStandardMaterial color="#1A1A1A" />
+          </mesh>
+        ))}
       </group>
       
-      {/* Sky and lighting */}
+      {/* Cielo e illuminazione */}
       <Sky
         distance={450000}
         sunPosition={isDaytime ? [0, 1, 0] : [0, -1, 0]}
@@ -79,10 +237,10 @@ const CityEnvironment = ({ timeOfDay }: { timeOfDay: 'day' | 'night' }) => {
         azimuth={0.25}
       />
       
-      {/* Ambient light */}
+      {/* Luce ambientale */}
       <ambientLight intensity={isDaytime ? 0.5 : 0.1} />
       
-      {/* Directional light representing the sun or moon */}
+      {/* Luce direzionale che rappresenta il sole o la luna */}
       <directionalLight
         position={isDaytime ? [10, 20, 10] : [-10, 10, -10]}
         intensity={isDaytime ? 1.0 : 0.2}
@@ -90,18 +248,34 @@ const CityEnvironment = ({ timeOfDay }: { timeOfDay: 'day' | 'night' }) => {
         shadow-mapSize-width={1024}
         shadow-mapSize-height={1024}
         shadow-camera-far={50}
-        shadow-camera-left={-20}
-        shadow-camera-right={20}
-        shadow-camera-top={20}
-        shadow-camera-bottom={-20}
+        shadow-camera-left={-30}
+        shadow-camera-right={30}
+        shadow-camera-top={30}
+        shadow-camera-bottom={-30}
       />
       
-      {/* Add some street lights at night */}
+      {/* Aggiungi alcune luci stradali di notte */}
       {!isDaytime && (
         <>
-          <pointLight position={[5, 2, -12]} intensity={1} distance={15} color="#FFF5E0" />
-          <pointLight position={[-5, 2, -15]} intensity={1} distance={15} color="#FFF5E0" />
-          <pointLight position={[0, 2, -20]} intensity={1} distance={15} color="#FFF5E0" />
+          {/* Luci stradali principali */}
+          {[[-10, -15], [10, -15], [0, -5], [0, -25], [-20, -15], [20, -15]].map(([x, z], i) => (
+            <pointLight key={`streetlight-${i}`} position={[x, 3, z]} intensity={0.8} distance={15} color="#FFF5E0" />
+          ))}
+          
+          {/* Luci ambientali sparse */}
+          {Array.from({ length: 8 }).map((_, i) => {
+            const posX = (Math.random() * 40 - 20);
+            const posZ = -5 - (Math.random() * 30);
+            return (
+              <pointLight 
+                key={`ambientlight-${i}`} 
+                position={[posX, 1 + Math.random() * 2, posZ]} 
+                intensity={0.4} 
+                distance={8} 
+                color={Math.random() > 0.7 ? "#FFF5E0" : "#FFE0CC"} 
+              />
+            );
+          })}
         </>
       )}
     </>

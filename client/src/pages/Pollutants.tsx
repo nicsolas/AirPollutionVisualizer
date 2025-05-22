@@ -6,25 +6,25 @@ import { pollutantColors } from "@/lib/utils/colors";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 
-// Pollutant information database - same as in InfoPanel.tsx
+// Database informazioni inquinanti - uguale a InfoPanel.tsx
 const pollutantInfoData: Record<PollutantType, PollutantInfo> = {
   [PollutantType.PM25]: {
     id: PollutantType.PM25,
     name: "PM2.5",
-    fullName: "Fine Particulate Matter",
-    description: "Tiny particles or droplets in the air that are 2.5 microns or less in width. They can travel deep into the respiratory tract, reaching the lungs and potentially entering the bloodstream.",
+    fullName: "Particolato Fine",
+    description: "Particelle o goccioline nell'aria con diametro inferiore a 2,5 micron. Possono penetrare in profondità nel tratto respiratorio, raggiungendo i polmoni e potenzialmente entrando nel flusso sanguigno.",
     sources: [
-      "Vehicle emissions",
-      "Power plants",
-      "Industrial processes",
-      "Residential wood burning",
-      "Forest fires"
+      "Emissioni veicolari",
+      "Centrali elettriche",
+      "Processi industriali",
+      "Combustione legna domestica",
+      "Incendi boschivi"
     ],
     healthEffects: [
-      "Aggravated asthma",
-      "Decreased lung function",
-      "Irregular heartbeat",
-      "Premature death in people with heart or lung disease"
+      "Aggravamento dell'asma",
+      "Riduzione della funzione polmonare",
+      "Battito cardiaco irregolare",
+      "Morte prematura in persone con malattie cardiache o polmonari"
     ],
     limits: {
       who: 5,
@@ -35,20 +35,20 @@ const pollutantInfoData: Record<PollutantType, PollutantInfo> = {
   [PollutantType.PM10]: {
     id: PollutantType.PM10,
     name: "PM10",
-    fullName: "Coarse Particulate Matter",
-    description: "Inhalable particles that are 10 micrometers or less in diameter, which can enter the lungs and cause health problems.",
+    fullName: "Particolato Grossolano",
+    description: "Particelle inalabili con diametro inferiore a 10 micrometri, che possono entrare nei polmoni e causare problemi di salute.",
     sources: [
-      "Road dust",
-      "Construction",
-      "Mining operations",
-      "Agricultural activities",
-      "Wind-blown dust"
+      "Polvere stradale",
+      "Cantieri edili",
+      "Operazioni minerarie",
+      "Attività agricole",
+      "Polvere trasportata dal vento"
     ],
     healthEffects: [
-      "Respiratory irritation",
-      "Decreased lung function",
-      "Aggravated asthma",
-      "Development of chronic bronchitis"
+      "Irritazione respiratoria",
+      "Riduzione della funzione polmonare",
+      "Aggravamento dell'asma",
+      "Sviluppo di bronchite cronica"
     ],
     limits: {
       who: 15,
@@ -59,19 +59,19 @@ const pollutantInfoData: Record<PollutantType, PollutantInfo> = {
   [PollutantType.NO2]: {
     id: PollutantType.NO2,
     name: "NO₂",
-    fullName: "Nitrogen Dioxide",
-    description: "A reddish-brown gas with a pungent, acrid odor. It is one of a group of highly reactive gases known as nitrogen oxides (NOx).",
+    fullName: "Biossido di Azoto",
+    description: "Gas di colore rosso-bruno con odore pungente e acre. È uno di un gruppo di gas altamente reattivi noti come ossidi di azoto (NOx).",
     sources: [
-      "Vehicle emissions",
-      "Power plants",
-      "Industrial processes",
-      "Off-road equipment"
+      "Emissioni veicolari",
+      "Centrali elettriche",
+      "Processi industriali",
+      "Attrezzature fuori strada"
     ],
     healthEffects: [
-      "Airway inflammation",
-      "Reduced lung function",
-      "Increased asthma attacks",
-      "Respiratory infections"
+      "Infiammazione delle vie aeree",
+      "Riduzione della funzione polmonare",
+      "Aumento di attacchi d'asma",
+      "Infezioni respiratorie"
     ],
     limits: {
       who: 10,
@@ -82,19 +82,19 @@ const pollutantInfoData: Record<PollutantType, PollutantInfo> = {
   [PollutantType.SO2]: {
     id: PollutantType.SO2,
     name: "SO₂",
-    fullName: "Sulfur Dioxide",
-    description: "A colorless gas with a sharp odor. It is produced from burning fossil fuels containing sulfur compounds.",
+    fullName: "Biossido di Zolfo",
+    description: "Gas incolore con odore pungente. È prodotto dalla combustione di combustibili fossili contenenti composti di zolfo.",
     sources: [
-      "Fossil fuel combustion",
-      "Industrial processes",
-      "Coal-burning power plants",
-      "Volcanic eruptions"
+      "Combustione di combustibili fossili",
+      "Processi industriali",
+      "Centrali a carbone",
+      "Eruzioni vulcaniche"
     ],
     healthEffects: [
-      "Breathing difficulties",
-      "Respiratory irritation",
-      "Aggravated asthma",
-      "Contribution to particle formation with associated health effects"
+      "Difficoltà respiratorie",
+      "Irritazione respiratoria",
+      "Aggravamento dell'asma",
+      "Contributo alla formazione di particelle con effetti sulla salute"
     ],
     limits: {
       who: 40,
@@ -105,20 +105,20 @@ const pollutantInfoData: Record<PollutantType, PollutantInfo> = {
   [PollutantType.O3]: {
     id: PollutantType.O3,
     name: "O₃",
-    fullName: "Ozone",
-    description: "A gas composed of three atoms of oxygen. Ground-level ozone is a harmful air pollutant and a key component of smog.",
+    fullName: "Ozono",
+    description: "Gas composto da tre atomi di ossigeno. L'ozono a livello del suolo è un inquinante atmosferico dannoso e un componente chiave dello smog.",
     sources: [
-      "Chemical reaction of pollutants (NOx and VOCs) with sunlight",
-      "Vehicle emissions",
-      "Industrial emissions",
-      "Chemical solvents"
+      "Reazione chimica degli inquinanti (NOx e COV) con la luce solare",
+      "Emissioni veicolari",
+      "Emissioni industriali",
+      "Solventi chimici"
     ],
     healthEffects: [
-      "Throat irritation",
-      "Lung inflammation",
-      "Reduced lung function",
-      "Aggravated asthma",
-      "Permanent lung damage with repeated exposure"
+      "Irritazione alla gola",
+      "Infiammazione polmonare",
+      "Riduzione della funzione polmonare",
+      "Aggravamento dell'asma",
+      "Danni polmonari permanenti con esposizione ripetuta"
     ],
     limits: {
       who: 100,
@@ -129,21 +129,21 @@ const pollutantInfoData: Record<PollutantType, PollutantInfo> = {
   [PollutantType.CO]: {
     id: PollutantType.CO,
     name: "CO",
-    fullName: "Carbon Monoxide",
-    description: "A colorless, odorless gas that is toxic at high levels. It is produced by the incomplete burning of carbon-containing fuels.",
+    fullName: "Monossido di Carbonio",
+    description: "Gas incolore e inodore tossico ad alte concentrazioni. È prodotto dalla combustione incompleta di combustibili contenenti carbonio.",
     sources: [
-      "Vehicle exhaust",
-      "Fuel combustion",
-      "Industrial processes",
-      "Household appliances",
-      "Wildfires"
+      "Gas di scarico dei veicoli",
+      "Combustione di carburanti",
+      "Processi industriali",
+      "Elettrodomestici",
+      "Incendi"
     ],
     healthEffects: [
-      "Reduced oxygen delivery to organs",
-      "Headache and dizziness",
-      "Confusion",
-      "Unconsciousness at high concentrations",
-      "Death at very high concentrations"
+      "Riduzione del trasporto di ossigeno agli organi",
+      "Mal di testa e vertigini",
+      "Confusione",
+      "Perdita di coscienza ad alte concentrazioni",
+      "Morte a concentrazioni molto elevate"
     ],
     limits: {
       who: 4,
@@ -156,16 +156,16 @@ const pollutantInfoData: Record<PollutantType, PollutantInfo> = {
 const Pollutants = () => {
   const [selectedPollutant, setSelectedPollutant] = useState<PollutantType>(PollutantType.PM25);
   
-  // Selected pollutant info
+  // Informazioni sull'inquinante selezionato
   const pollutantInfo = pollutantInfoData[selectedPollutant];
   
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 pb-24">
       <div className="flex items-center mb-6">
         <Link to="/" className="mr-4 text-muted-foreground hover:text-foreground">
           <ArrowLeft className="h-5 w-5" />
         </Link>
-        <h1 className="text-3xl font-bold">Air Pollutants Information</h1>
+        <h1 className="text-3xl font-bold">Informazioni sugli Inquinanti Atmosferici</h1>
       </div>
       
       <Tabs 
@@ -173,7 +173,7 @@ const Pollutants = () => {
         onValueChange={(value) => setSelectedPollutant(value as PollutantType)}
         className="space-y-6"
       >
-        <div className="bg-card rounded-lg p-1">
+        <div className="bg-card rounded-lg p-1 sticky top-16 z-10">
           <TabsList className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 w-full">
             {Object.values(PollutantType).map((pollutant) => (
               <TabsTrigger 
@@ -213,7 +213,7 @@ const Pollutants = () => {
                   <p>{pollutantInfoData[pollutant].description}</p>
                   
                   <div className="bg-muted p-4 rounded-md mt-4">
-                    <h3 className="text-lg font-medium mb-2">WHO Guideline Limit</h3>
+                    <h3 className="text-lg font-medium mb-2">Limite Raccomandato OMS</h3>
                     <div className="text-3xl font-bold flex items-baseline">
                       {pollutantInfoData[pollutant].limits.who} 
                       <span className="text-base ml-1 text-muted-foreground">
@@ -221,8 +221,8 @@ const Pollutants = () => {
                       </span>
                     </div>
                     <p className="text-sm text-muted-foreground mt-2">
-                      The World Health Organization recommends that average exposure should not exceed this value
-                      for optimal protection of human health.
+                      L'Organizzazione Mondiale della Sanità raccomanda che l'esposizione media non superi questo valore
+                      per una protezione ottimale della salute umana.
                     </p>
                   </div>
                 </CardContent>
@@ -231,7 +231,7 @@ const Pollutants = () => {
               <div className="space-y-6">
                 <Card>
                   <CardHeader className="pb-2">
-                    <CardTitle>Main Sources</CardTitle>
+                    <CardTitle>Fonti Principali</CardTitle>
                   </CardHeader>
                   <CardContent className="pt-4">
                     <ul className="space-y-2">
@@ -250,7 +250,7 @@ const Pollutants = () => {
                 
                 <Card>
                   <CardHeader className="pb-2">
-                    <CardTitle>Health Effects</CardTitle>
+                    <CardTitle>Effetti sulla Salute</CardTitle>
                   </CardHeader>
                   <CardContent className="pt-4">
                     <ul className="space-y-2">
@@ -271,85 +271,85 @@ const Pollutants = () => {
             
             <Card>
               <CardHeader className="pb-2">
-                <CardTitle>Mitigation Strategies</CardTitle>
+                <CardTitle>Strategie di Mitigazione</CardTitle>
               </CardHeader>
               <CardContent className="pt-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {pollutant === PollutantType.PM25 || pollutant === PollutantType.PM10 ? (
                     <>
                       <div className="space-y-2">
-                        <h3 className="font-medium">For Individuals</h3>
+                        <h3 className="font-medium">Per gli Individui</h3>
                         <ul className="text-sm space-y-1 list-disc pl-5">
-                          <li>Use air purifiers with HEPA filters</li>
-                          <li>Keep windows closed on high pollution days</li>
-                          <li>Wear masks (N95 or better) when air quality is poor</li>
-                          <li>Avoid outdoor exercise during peak pollution times</li>
-                          <li>Regularly replace HVAC filters in your home</li>
+                          <li>Utilizzare purificatori d'aria con filtri HEPA</li>
+                          <li>Tenere le finestre chiuse nei giorni ad alto inquinamento</li>
+                          <li>Indossare mascherine (N95 o migliori) quando la qualità dell'aria è scarsa</li>
+                          <li>Evitare attività all'aperto durante i picchi di inquinamento</li>
+                          <li>Sostituire regolarmente i filtri HVAC a casa</li>
                         </ul>
                       </div>
                     </>
                   ) : pollutant === PollutantType.NO2 || pollutant === PollutantType.SO2 ? (
                     <>
                       <div className="space-y-2">
-                        <h3 className="font-medium">For Individuals</h3>
+                        <h3 className="font-medium">Per gli Individui</h3>
                         <ul className="text-sm space-y-1 list-disc pl-5">
-                          <li>Use public transportation or carpool</li>
-                          <li>Ensure proper ventilation when using gas appliances</li>
-                          <li>Avoid idling your vehicle</li>
-                          <li>Consider electric or hybrid vehicles</li>
-                          <li>Use low-VOC products in your home</li>
+                          <li>Utilizzare i mezzi pubblici o condividere l'auto</li>
+                          <li>Garantire una ventilazione adeguata quando si usano apparecchi a gas</li>
+                          <li>Evitare di lasciare il motore acceso da fermi</li>
+                          <li>Considerare veicoli elettrici o ibridi</li>
+                          <li>Utilizzare prodotti a basso contenuto di COV in casa</li>
                         </ul>
                       </div>
                     </>
                   ) : pollutant === PollutantType.O3 ? (
                     <>
                       <div className="space-y-2">
-                        <h3 className="font-medium">For Individuals</h3>
+                        <h3 className="font-medium">Per gli Individui</h3>
                         <ul className="text-sm space-y-1 list-disc pl-5">
-                          <li>Follow local ozone alerts and stay indoors during peak times</li>
-                          <li>Schedule outdoor activities in the morning or evening</li>
-                          <li>Use products with low VOC emissions</li>
-                          <li>Conserve energy to reduce power plant emissions</li>
-                          <li>Properly maintain your vehicle</li>
+                          <li>Seguire gli avvisi locali sull'ozono e rimanere al chiuso nei momenti di picco</li>
+                          <li>Programmare le attività all'aperto al mattino o alla sera</li>
+                          <li>Utilizzare prodotti con basse emissioni di COV</li>
+                          <li>Risparmiare energia per ridurre le emissioni delle centrali elettriche</li>
+                          <li>Mantenere correttamente il proprio veicolo</li>
                         </ul>
                       </div>
                     </>
                   ) : (
                     <>
                       <div className="space-y-2">
-                        <h3 className="font-medium">For Individuals</h3>
+                        <h3 className="font-medium">Per gli Individui</h3>
                         <ul className="text-sm space-y-1 list-disc pl-5">
-                          <li>Install carbon monoxide detectors in your home</li>
-                          <li>Ensure proper ventilation for gas appliances</li>
-                          <li>Have heating systems professionally inspected annually</li>
-                          <li>Never run generators or grills indoors</li>
-                          <li>Avoid idling vehicles in enclosed spaces</li>
+                          <li>Installare rilevatori di monossido di carbonio in casa</li>
+                          <li>Garantire una ventilazione adeguata per gli apparecchi a gas</li>
+                          <li>Far ispezionare professionalmente i sistemi di riscaldamento ogni anno</li>
+                          <li>Non utilizzare mai generatori o griglie al chiuso</li>
+                          <li>Evitare di lasciare i veicoli con motore acceso in spazi chiusi</li>
                         </ul>
                       </div>
                     </>
                   )}
                   
                   <div className="space-y-2">
-                    <h3 className="font-medium">For Communities</h3>
+                    <h3 className="font-medium">Per le Comunità</h3>
                     <ul className="text-sm space-y-1 list-disc pl-5">
-                      <li>Implement stricter emission standards</li>
-                      <li>Promote public transportation</li>
-                      <li>Create car-free zones in city centers</li>
-                      <li>Invest in renewable energy sources</li>
-                      <li>Establish air quality monitoring networks</li>
-                      <li>Develop early warning systems for pollution events</li>
+                      <li>Implementare standard di emissione più severi</li>
+                      <li>Promuovere il trasporto pubblico</li>
+                      <li>Creare zone senza auto nei centri città</li>
+                      <li>Investire in fonti di energia rinnovabile</li>
+                      <li>Stabilire reti di monitoraggio della qualità dell'aria</li>
+                      <li>Sviluppare sistemi di allerta precoce per eventi di inquinamento</li>
                     </ul>
                   </div>
                   
                   <div className="space-y-2">
-                    <h3 className="font-medium">For Industries</h3>
+                    <h3 className="font-medium">Per le Industrie</h3>
                     <ul className="text-sm space-y-1 list-disc pl-5">
-                      <li>Adopt cleaner production technologies</li>
-                      <li>Install scrubbers and filters on smokestacks</li>
-                      <li>Improve energy efficiency</li>
-                      <li>Switch to cleaner fuels</li>
-                      <li>Implement continuous emissions monitoring</li>
-                      <li>Support research for cleaner technologies</li>
+                      <li>Adottare tecnologie di produzione più pulite</li>
+                      <li>Installare depuratori e filtri sui camini</li>
+                      <li>Migliorare l'efficienza energetica</li>
+                      <li>Passare a combustibili più puliti</li>
+                      <li>Implementare il monitoraggio continuo delle emissioni</li>
+                      <li>Sostenere la ricerca per tecnologie più pulite</li>
                     </ul>
                   </div>
                 </div>
