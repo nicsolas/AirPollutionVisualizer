@@ -68,7 +68,7 @@ const Home = () => {
             </CardContent>
           </Card>
           
-          <div className="mt-4">
+          <div className="mt-2">
             <TimeSlider />
           </div>
         </div>
