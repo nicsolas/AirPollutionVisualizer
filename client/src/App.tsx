@@ -51,10 +51,10 @@ function App() {
   }, [setBackgroundMusic, setHitSound, setSuccessSound]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground">
+    <div className="min-h-screen flex flex-col bg-background text-foreground w-full overflow-x-hidden">
       <NavBar />
       
-      <main className="flex-1">
+      <main className="flex-1 w-full px-4 md:px-6 lg:px-8">
         <Suspense fallback={<div className="p-8 text-center">Caricamento in corso...</div>}>
           <Routes>
             <Route path="/" element={<Home />} />

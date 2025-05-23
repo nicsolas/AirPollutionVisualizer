@@ -154,31 +154,31 @@ const pollutantInfoData: Record<PollutantType, PollutantInfo> = {
 
 const InfoPanel = () => {
   const { selectedPollutant, cityData } = usePollution();
-  
+
   const pollutantInfo = pollutantInfoData[selectedPollutant];
-  
+
   // Ottieni il valore corrente per l'inquinante selezionato
   const currentValue = cityData?.data.pollutants[selectedPollutant]?.value;
   const unit = cityData?.data.pollutants[selectedPollutant]?.unit;
-  
+
   // Stile colore per l'inquinante
   const colorStyle = { color: pollutantInfo.color };
   const badgeStyle = { backgroundColor: pollutantInfo.color };
-  
+
   return (
     <Card className="w-full">
       <CardHeader className="pb-2 flex flex-row items-center justify-between">
         <CardTitle className="text-lg">
           <span style={colorStyle}>{pollutantInfo.name}</span> - {pollutantInfo.fullName}
         </CardTitle>
-        
+
         {currentValue !== undefined && (
           <Badge style={badgeStyle} className="text-white ml-2">
             {currentValue} {unit}
           </Badge>
         )}
       </CardHeader>
-      
+
       <CardContent>
         <Tabs defaultValue="info">
           <TabsList className="grid w-full grid-cols-3 mb-4">
@@ -186,7 +186,7 @@ const InfoPanel = () => {
             <TabsTrigger value="sources">Fonti</TabsTrigger>
             <TabsTrigger value="health">Effetti sulla Salute</TabsTrigger>
           </TabsList>
-          
+
           <TabsContent value="info" className="space-y-4">
             <p>{pollutantInfo.description}</p>
             <div>
@@ -196,7 +196,7 @@ const InfoPanel = () => {
               </p>
             </div>
           </TabsContent>
-          
+
           <TabsContent value="sources">
             <ul className="space-y-2 list-disc pl-5">
               {pollutantInfo.sources.map((source, index) => (
@@ -204,7 +204,7 @@ const InfoPanel = () => {
               ))}
             </ul>
           </TabsContent>
-          
+
           <TabsContent value="health">
             <ul className="space-y-2 list-disc pl-5">
               {pollutantInfo.healthEffects.map((effect, index) => (

@@ -1155,8 +1155,8 @@ const PollutionScene = () => {
   }, [selectedPollutant, cityData, playHit]);
 
   return (
-    <div className="h-full w-full">
-      <Canvas shadows camera={{ position: [15, 15, 15], fov: 50 }}>
+    <div className="h-[50vh] md:h-[60vh] lg:h-[70vh] w-full">
+      <Canvas shadows camera={{ position: [15, 15, 15], fov: useIsMobile() ? 70 : 50 }}>
         <Suspense fallback={null}>
           {visualizationSettings.viewMode === 'city' ? (
             <CityEnvironment timeOfDay={visualizationSettings.timeOfDay} />

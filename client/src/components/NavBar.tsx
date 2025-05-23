@@ -7,7 +7,7 @@ import { useAudio } from "@/lib/stores/useAudio";
 const NavBar = () => {
   const location = useLocation();
   const { isMuted, toggleMute } = useAudio();
-  
+
   return (
     <header className="sticky top-0 z-40 w-full bg-card/80 backdrop-blur supports-[backdrop-filter]:bg-card/60 border-b">
       <div className="container flex h-16 items-center px-4 sm:px-6">
@@ -15,7 +15,7 @@ const NavBar = () => {
           <Wind className="h-6 w-6 text-primary" />
           <span className="hidden font-bold sm:inline-block">Visualizzatore Inquinamento Atmosferico</span>
         </div>
-        
+
         <nav className="flex flex-1 items-center justify-between">
           <div className="flex gap-1">
             <Button
@@ -32,7 +32,7 @@ const NavBar = () => {
                 <span>Home</span>
               </Link>
             </Button>
-            
+
             <Button
               variant="ghost"
               size="sm"
@@ -47,7 +47,7 @@ const NavBar = () => {
                 <span>Inquinanti</span>
               </Link>
             </Button>
-            
+
             <Button
               variant="ghost"
               size="sm"
@@ -63,7 +63,7 @@ const NavBar = () => {
               </Link>
             </Button>
           </div>
-          
+
           <Button
             variant="ghost"
             size="icon"
