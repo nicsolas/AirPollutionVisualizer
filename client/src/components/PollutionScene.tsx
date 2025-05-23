@@ -4,6 +4,7 @@ import { Suspense, useRef, useState, useEffect } from "react";
 import { usePollution } from "@/lib/stores/usePollution";
 import ParticleSystem from "./ParticleSystem";
 import { useAudio } from "@/lib/stores/useAudio";
+import { useIsMobile } from "@/hooks/use-is-mobile";
 import * as THREE from "three";
 
 // City environment model
@@ -1153,9 +1154,6 @@ const PollutionScene = () => {
       playHit();
     }
   }, [selectedPollutant, cityData, playHit]);
-
-  import { useEffect, useRef, useState } from "react";
-import { useIsMobile } from "@/hooks/use-is-mobile";
 
   return (
     <div className="h-[50vh] md:h-[60vh] lg:h-[70vh] w-full">
