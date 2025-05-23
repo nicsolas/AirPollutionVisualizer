@@ -9,7 +9,7 @@ const PageScroller = () => {
 
   useEffect(() => {
     const toggleVisibility = () => {
-      if (window.pageYOffset > 300) {
+      if (window.pageYOffset > 100) {
         setIsVisible(true);
       } else {
         setIsVisible(false);
@@ -33,7 +33,7 @@ const PageScroller = () => {
     <Button
       variant="outline"
       size="icon"
-      className={`fixed bottom-4 right-4 z-50 rounded-full transition-opacity duration-200 ${
+      className={`fixed bottom-6 right-6 z-50 rounded-full transition-opacity duration-200 shadow-lg ${
         isVisible ? 'opacity-100' : 'opacity-0'
       }`}
       onClick={scrollToTop}
