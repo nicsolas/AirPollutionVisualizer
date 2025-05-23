@@ -49,8 +49,12 @@ const TimeSlider = () => {
       return "Attuale";
     }
     
-    const pastTime = subHours(currentTime, Math.abs(timeOffset));
-    return format(pastTime, "H:mm");
+    try {
+      const pastTime = subHours(new Date(), Math.abs(timeOffset));
+      return format(pastTime, "H:mm");
+    } catch (e) {
+      return "Invalid time";
+    }
   };
   
   // Calcola il tempo come una stringa leggibile
