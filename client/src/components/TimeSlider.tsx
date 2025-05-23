@@ -63,8 +63,12 @@ const TimeSlider = () => {
       return "Ora corrente";
     }
     
-    const pastTime = subHours(currentTime, Math.abs(timeOffset));
-    return `${formatDistanceToNow(pastTime)} fa`;
+    try {
+      const pastTime = subHours(new Date(), Math.abs(timeOffset));
+      return `${formatDistanceToNow(pastTime)} fa`;
+    } catch (e) {
+      return "Tempo non valido";
+    }
   };
   
   // Gestisce il cambio dello slider temporale
