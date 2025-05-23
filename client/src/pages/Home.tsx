@@ -59,15 +59,10 @@ const Home = () => {
         <CitySelector />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6 flex-grow">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
         {/* Area di visualizzazione principale */}
-        <div className="lg:col-span-2 flex flex-col">
-          <Card className="flex-grow overflow-hidden">
-            <CardContent className="p-0 h-[50vh] lg:h-full">
-              <PollutionScene />
-            </CardContent>
-          </Card>
-
+        <div className="lg:col-span-2 lg:sticky lg:top-0 h-screen">
+          <PollutionScene />
           <div className="mt-2">
             <TimeSlider />
           </div>
