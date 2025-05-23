@@ -52,7 +52,7 @@ function App() {
   }, [setBackgroundMusic, setHitSound, setSuccessSound]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground w-full relative">
+    <div className="flex flex-col bg-background text-foreground w-full min-h-screen">
       <NavBar />
       
       <main className="flex-1 w-full px-2 sm:px-4 md:px-6 lg:px-8">
