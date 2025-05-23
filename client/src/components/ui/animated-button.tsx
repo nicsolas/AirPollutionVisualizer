@@ -46,12 +46,18 @@ const buttonVariants = cva(
 const buttonMotionVariants = {
   tap: {
     scale: 0.95,
+    backgroundColor: "#4CAF50",
+    transition: { duration: 0.2 }
   },
   hover: {
     scale: 1.05,
+    backgroundColor: "#45a049",
+    boxShadow: "0 0 15px rgba(76, 175, 80, 0.5)",
+    transition: { duration: 0.3 }
   },
   initial: {
     scale: 1,
+    backgroundColor: "#4CAF50",
   }
 };
 

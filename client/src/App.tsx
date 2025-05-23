@@ -52,10 +52,10 @@ function App() {
   }, [setBackgroundMusic, setHitSound, setSuccessSound]);
 
   return (
-    <div className="flex flex-col bg-background text-foreground w-full min-h-screen">
+    <div className="flex flex-col bg-background text-foreground w-full min-h-screen gradient-bg">
       <NavBar />
       
-      <main className="flex-1 w-full px-2 sm:px-4 md:px-6 lg:px-8">
+      <main className="flex-1 w-full px-2 sm:px-4 md:px-6 lg:px-8 animate-fadeIn">
         <div className="max-w-7xl mx-auto pb-24 min-h-[calc(100vh-4rem)] relative">
         <Suspense fallback={<div className="p-8 text-center">Caricamento in corso...</div>}>
           <Routes>
