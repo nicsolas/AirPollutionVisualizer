@@ -856,7 +856,7 @@ const CityEnvironment = ({ timeOfDay }: { timeOfDay: 'day' | 'night' }) => {
       />
 
 ```
-      {/* Posiziona semafori alle intersezioni principali */}
+      {/*      Posiziona semafori alle intersezioni principali */}
       {[
         [6, -9], [6, -21], [-6, -9], [-6, -21],
         [16, -9], [16, -21], [-16, -9], [-16, -21]
@@ -1153,6 +1153,9 @@ const PollutionScene = () => {
       playHit();
     }
   }, [selectedPollutant, cityData, playHit]);
+
+  import { useEffect, useRef, useState } from "react";
+import { useIsMobile } from "@/hooks/use-is-mobile";
 
   return (
     <div className="h-[50vh] md:h-[60vh] lg:h-[70vh] w-full">
