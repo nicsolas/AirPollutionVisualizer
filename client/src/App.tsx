@@ -1,6 +1,7 @@
 import { Suspense, useEffect, useRef } from "react";
 import { Routes, Route } from "react-router-dom";
 import { Toaster } from "sonner";
+import PageScroller from "./components/PageScroller";
 import { useAudio } from "./lib/stores/useAudio";
 import "@fontsource/inter";
 
@@ -54,7 +55,8 @@ function App() {
     <div className="min-h-screen flex flex-col bg-background text-foreground w-full overflow-x-hidden">
       <NavBar />
       
-      <main className="flex-1 w-full px-4 md:px-6 lg:px-8">
+      <main className="flex-1 w-full px-2 sm:px-4 md:px-6 lg:px-8 relative">
+        <div className="max-w-7xl mx-auto">
         <Suspense fallback={<div className="p-8 text-center">Caricamento in corso...</div>}>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -63,9 +65,11 @@ function App() {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
+      </div>
       </main>
       
       <Toaster position="bottom-right" />
+      <PageScroller />
     </div>
   );
 }
