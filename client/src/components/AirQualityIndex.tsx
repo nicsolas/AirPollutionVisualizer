@@ -1,11 +1,29 @@
 import { PollutantType, AQILevel } from "@/lib/types";
 import { aqiColors, getAQIColor } from "@/lib/utils/colors";
+import { useQuery } from "@tanstack/react-query";
 import { usePollution } from "@/lib/stores/usePollution";
+import { getApiUrl } from "@/lib/queryClient";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useMemo } from "react";
 
 const AirQualityIndex = () => {
-  const { cityData, isLoading } = usePollution();
+  const { selectedCity, timeOffset } = usePollution();
+  const {
+    data: cityData,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: [
+      `/api/pollution/${selectedCity}?offset=${timeOffset}`
+    ],
+    enabled: !!selectedCity,
+    queryFn: async ({ queryKey }) => {
+      const url = getApiUrl(queryKey[0] as string);
+      const res = await fetch(url);
+      if (!res.ok) throw new Error("Impossibile recuperare i dati AQI");
+      return res.json();
+    },
+  });
   
   // Determina le classi CSS del livello AQI in base ai dati correnti
   const aqiDisplay = useMemo(() => {
@@ -37,8 +55,7 @@ const AirQualityIndex = () => {
       </Card>
     );
   }
-  
-  if (!cityData) {
+  if (error || !cityData) {
     return (
       <Card className="min-w-[300px]">
         <CardHeader className="pb-2">
@@ -46,7 +63,7 @@ const AirQualityIndex = () => {
         </CardHeader>
         <CardContent>
           <div className="h-24 flex items-center justify-center">
-            <p className="text-muted-foreground">Nessun dato disponibile</p>
+            <p className="text-muted-foreground">Impossibile caricare i dati AQI</p>
           </div>
         </CardContent>
       </Card>
