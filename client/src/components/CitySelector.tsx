@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
 import {
   Select,
   SelectContent,
@@ -9,79 +7,29 @@ import {
 } from "@/components/ui/select";
 import { usePollution } from "@/lib/stores/usePollution";
 
+// Lista statica di città italiane principali con coordinate
+export const ITALIAN_CITIES = [
+  { id: "roma", name: "Roma", lat: 41.9028, lon: 12.4964 },
+  { id: "milano", name: "Milano", lat: 45.4642, lon: 9.19 },
+  { id: "napoli", name: "Napoli", lat: 40.8522, lon: 14.2681 },
+  { id: "torino", name: "Torino", lat: 45.0703, lon: 7.6869 },
+  { id: "palermo", name: "Palermo", lat: 38.1157, lon: 13.3615 },
+  { id: "genova", name: "Genova", lat: 44.4056, lon: 8.9463 },
+  { id: "bologna", name: "Bologna", lat: 44.4949, lon: 11.3426 },
+  { id: "firenze", name: "Firenze", lat: 43.7696, lon: 11.2558 },
+  { id: "bari", name: "Bari", lat: 41.1171, lon: 16.8719 },
+  { id: "catania", name: "Catania", lat: 37.5079, lon: 15.083 },
+  // ...aggiungi altre città se vuoi
+];
+
 const CitySelector = () => {
   const { selectedCity, setSelectedCity } = usePollution();
-  const [searchTerm, setSearchTerm] = useState("");
-  const apiKey = import.meta.env.VITE_OPENAQ_API_KEY;
 
-  // Fetch unique cities from OpenAQ v3 /locations (Italy)
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["openaq-cities-it-v3"],
-    queryFn: async () => {
-      const res = await fetch(
-        "https://api.openaq.org/v3/locations?country=IT&limit=1000&order_by=city",
-        {
-          headers: {
-            accept: "application/json",
-            ...(apiKey ? { "X-API-Key": apiKey } : {}),
-          },
-        }
-      );
-      if (!res.ok) throw new Error("Errore caricamento città");
-      const json = await res.json();
-      // json.data è l'array delle locations, estrai città uniche
-      const unique = Array.from(
-        new Set((json.data || []).map((c: any) => String(c.city)))
-      ).filter((city): city is string => Boolean(city));
-      return unique.map((city) => ({ id: city, name: city, country: "IT" }));
-    },
-    staleTime: 1000 * 60 * 60,
-  });
-
-  const cities = data || [];
-  const filteredCities = searchTerm
-    ? cities.filter((city) =>
-        city.name.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    : cities;
-  const currentCity = cities.find((city) => city.id === selectedCity);
-
-  if (isLoading) {
-    return (
-      <div className="relative w-full max-w-md">
-        <Select disabled>
-          <SelectTrigger>
-            <SelectValue placeholder="Caricamento città in corso..." />
-          </SelectTrigger>
-        </Select>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="relative w-full max-w-md">
-        <Select disabled>
-          <SelectTrigger className="border-destructive">
-            <SelectValue placeholder="Impossibile caricare le città" />
-          </SelectTrigger>
-        </Select>
-        <div className="text-destructive text-sm mt-2">
-          {String(error.message || error)}
-        </div>
-      </div>
-    );
-  }
+  const filteredCities = ITALIAN_CITIES;
+  const currentCity = ITALIAN_CITIES.find((city) => city.id === selectedCity);
 
   return (
     <div className="relative w-full max-w-md">
-      <input
-        type="text"
-        placeholder="Cerca città..."
-        className="mb-2 w-full border rounded px-2 py-1"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
       <Select value={selectedCity} onValueChange={setSelectedCity}>
         <SelectTrigger className="w-full">
           <SelectValue placeholder="Seleziona una città">
