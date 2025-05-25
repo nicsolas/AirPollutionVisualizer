@@ -23,13 +23,21 @@ export async function apiRequest(
   return res;
 }
 
+export function getApiUrl(path: string) {
+  const base = import.meta.env.VITE_API_BASE_URL || "";
+  if (path.startsWith("http")) return path;
+  if (base && !base.endsWith("/")) return base + path;
+  return base + path;
+}
+
 type UnauthorizedBehavior = "returnNull" | "throw";
 export const getQueryFn: <T>(options: {
   on401: UnauthorizedBehavior;
 }) => QueryFunction<T> =
   ({ on401: unauthorizedBehavior }) =>
   async ({ queryKey }) => {
-    const res = await fetch(queryKey[0] as string, {
+    const url = getApiUrl(queryKey[0] as string);
+    const res = await fetch(url, {
       credentials: "include",
     });
 
