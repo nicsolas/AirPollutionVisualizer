@@ -23,15 +23,19 @@ const AirQualityIndex = () => {
     enabled: !!selectedCity,
     queryFn: async () => {
       if (!selectedCity) return null;
-      const res = await fetch(`https://api.openaq.org/v3/latest?city=${encodeURIComponent(selectedCity)}&parameter=pm25&limit=1`, {
-        headers: {
-          "accept": "application/json",
-          ...(apiKey ? { "X-API-Key": apiKey } : {})
-        },
-      });
+      const res = await fetch(
+        `https://api.openaq.org/v2/latest?city=${encodeURIComponent(selectedCity)}&parameter=pm25&limit=1`,
+        {
+          headers: {
+            accept: "application/json",
+            ...(apiKey ? { "X-API-Key": apiKey } : {}),
+          },
+        }
+      );
+      if (!res.ok) throw new Error("Errore caricamento AQI");
       const json = await res.json();
-      // OpenAQ v3: json.data è l'array dei risultati
-      const pm25 = json.data?.[0]?.measurements?.find((m: any) => m.parameter === "pm25")?.value ?? null;
+      // json.results[0].measurements contiene i dati
+      const pm25 = json.results?.[0]?.measurements?.find((m: any) => m.parameter === "pm25")?.value ?? null;
       return pm25;
     },
     staleTime: 1000 * 60 * 10,
