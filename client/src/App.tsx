@@ -21,33 +21,36 @@ function App() {
   
   // Carica l'audio per l'applicazione - solo una volta all'avvio
   useEffect(() => {
-    // Previene la reinizializzazione
     if (initialized.current) return;
     initialized.current = true;
-    
+
     // Configurazione musica di sottofondo (sarà silenziata di default)
     const backgroundMusic = new Audio("/sounds/background.mp3");
     backgroundMusic.loop = true;
     backgroundMusic.volume = 0.3;
-    
+
     // Effetti sonori
     const hitSound = new Audio("/sounds/hit.mp3");
     const successSound = new Audio("/sounds/success.mp3");
-    
-    // Configura l'audio nello store
+
     setBackgroundMusic(backgroundMusic);
     setHitSound(hitSound);
     setSuccessSound(successSound);
-    
-    // Avvia la musica di sottofondo (sarà silenziata in base allo stato dello store)
-    backgroundMusic.play().catch(error => {
-      console.log("Riproduzione automatica impedita:", error);
-    });
-    
-    // Pulizia quando il componente viene smontato
+
+    // Riproduci la musica solo dopo interazione utente
+    const tryPlay = () => {
+      backgroundMusic.play().catch(() => {});
+      window.removeEventListener("pointerdown", tryPlay);
+      window.removeEventListener("keydown", tryPlay);
+    };
+    window.addEventListener("pointerdown", tryPlay);
+    window.addEventListener("keydown", tryPlay);
+
     return () => {
       backgroundMusic.pause();
       backgroundMusic.currentTime = 0;
+      window.removeEventListener("pointerdown", tryPlay);
+      window.removeEventListener("keydown", tryPlay);
     };
   }, [setBackgroundMusic, setHitSound, setSuccessSound]);
 
