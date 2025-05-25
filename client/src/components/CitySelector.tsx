@@ -14,12 +14,12 @@ const CitySelector = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const apiKey = import.meta.env.VITE_OPENAQ_API_KEY;
 
-  // Fetch cities from OpenAQ v2 (Italy)
+  // Fetch unique cities from OpenAQ v3 /locations (Italy)
   const { data, isLoading, error } = useQuery({
-    queryKey: ["openaq-cities-it"],
+    queryKey: ["openaq-cities-it-v3"],
     queryFn: async () => {
       const res = await fetch(
-        "https://api.openaq.org/v2/cities?country=IT&limit=1000&order_by=city",
+        "https://api.openaq.org/v3/locations?country=IT&limit=1000&order_by=city",
         {
           headers: {
             accept: "application/json",
@@ -29,9 +29,9 @@ const CitySelector = () => {
       );
       if (!res.ok) throw new Error("Errore caricamento città");
       const json = await res.json();
-      // json.results è l'array delle città
+      // json.data è l'array delle locations, estrai città uniche
       const unique = Array.from(
-        new Set((json.results || []).map((c: any) => String(c.city)))
+        new Set((json.data || []).map((c: any) => String(c.city)))
       ).filter((city): city is string => Boolean(city));
       return unique.map((city) => ({ id: city, name: city, country: "IT" }));
     },

@@ -19,12 +19,12 @@ const AirQualityIndex = () => {
   const { selectedCity } = usePollution();
   const apiKey = import.meta.env.VITE_OPENAQ_API_KEY;
   const { data, isLoading, error } = useQuery({
-    queryKey: ["openaq-aqi", selectedCity],
+    queryKey: ["openaq-aqi-v3", selectedCity],
     enabled: !!selectedCity,
     queryFn: async () => {
       if (!selectedCity) return null;
       const res = await fetch(
-        `https://api.openaq.org/v2/latest?city=${encodeURIComponent(selectedCity)}&parameter=pm25&limit=1`,
+        `https://api.openaq.org/v3/measurements?country=IT&city=${encodeURIComponent(selectedCity)}&parameter=pm25&limit=1&order_by=datetime&sort=desc`,
         {
           headers: {
             accept: "application/json",
@@ -34,8 +34,8 @@ const AirQualityIndex = () => {
       );
       if (!res.ok) throw new Error("Errore caricamento AQI");
       const json = await res.json();
-      // json.results[0].measurements contiene i dati
-      const pm25 = json.results?.[0]?.measurements?.find((m: any) => m.parameter === "pm25")?.value ?? null;
+      // json.data[0].value contiene il valore PM2.5
+      const pm25 = json.data?.[0]?.value ?? null;
       return pm25;
     },
     staleTime: 1000 * 60 * 10,
