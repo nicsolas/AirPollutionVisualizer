@@ -13,11 +13,14 @@ const CitySelector = () => {
   const { selectedCity, setSelectedCity } = usePollution();
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Fetch cities from OpenAQ (Italy, unique city names)
+  const apiKey = import.meta.env.VITE_OPENAQ_API_KEY;
+  // Fetch cities from OpenAQ v3 (Italy, unique city names)
   const { data: cities, isLoading, error } = useQuery({
     queryKey: ["openaq-cities-it"],
     queryFn: async () => {
-      const res = await fetch("https://api.openaq.org/v2/cities?country=IT&limit=1000&order_by=city");
+      const res = await fetch("https://api.openaq.org/v3/cities?country=IT&limit=1000&order_by=city", {
+        headers: apiKey ? { "X-API-Key": apiKey } : {},
+      });
       const json = await res.json();
       // Remove duplicates and filter out nulls
       const unique = Array.from(new Set(json.results.map((c: any) => String(c.city)))).filter((city): city is string => Boolean(city));

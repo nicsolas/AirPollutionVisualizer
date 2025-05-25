@@ -17,12 +17,15 @@ function pm25ToAQI(pm25: number): { aqi: number; level: AQILevel } {
 
 const AirQualityIndex = () => {
   const { selectedCity } = usePollution();
+  const apiKey = import.meta.env.VITE_OPENAQ_API_KEY;
   const { data, isLoading, error } = useQuery({
     queryKey: ["openaq-aqi", selectedCity],
     enabled: !!selectedCity,
     queryFn: async () => {
       if (!selectedCity) return null;
-      const res = await fetch(`https://api.openaq.org/v2/latest?city=${encodeURIComponent(selectedCity)}&parameter=pm25&limit=1`);
+      const res = await fetch(`https://api.openaq.org/v3/latest?city=${encodeURIComponent(selectedCity)}&parameter=pm25&limit=1`, {
+        headers: apiKey ? { "X-API-Key": apiKey } : {},
+      });
       const json = await res.json();
       // Cerca il valore PM2.5, fallback a null se non trovato
       const pm25 = json.results?.[0]?.measurements?.find((m: any) => m.parameter === "pm25")?.value ?? null;
