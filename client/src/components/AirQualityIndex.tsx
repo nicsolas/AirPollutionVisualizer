@@ -21,16 +21,18 @@ const AirQualityIndex = () => {
     queryKey: ["openaq-aqi", selectedCity],
     enabled: !!selectedCity,
     queryFn: async () => {
+      if (!selectedCity) return null;
       const res = await fetch(`https://api.openaq.org/v2/latest?city=${encodeURIComponent(selectedCity)}&parameter=pm25&limit=1`);
       const json = await res.json();
-      const pm25 = json.results?.[0]?.measurements?.find((m: any) => m.parameter === "pm25")?.value;
+      // Cerca il valore PM2.5, fallback a null se non trovato
+      const pm25 = json.results?.[0]?.measurements?.find((m: any) => m.parameter === "pm25")?.value ?? null;
       return pm25;
     },
     staleTime: 1000 * 60 * 10,
   });
 
   const aqiDisplay = useMemo(() => {
-    if (!data) return { aqi: 0, level: AQILevel.Good, color: aqiColors[AQILevel.Good] };
+    if (!data || typeof data !== "number") return { aqi: 0, level: AQILevel.Good, color: aqiColors[AQILevel.Good] };
     const { aqi, level } = pm25ToAQI(data);
     return { aqi, level, color: getAQIColor(aqi) };
   }, [data]);
@@ -50,7 +52,7 @@ const AirQualityIndex = () => {
     );
   }
 
-  if (error || !data) {
+  if (error || !data || typeof data !== "number") {
     return (
       <Card className="min-w-[300px]">
         <CardHeader className="pb-2">
@@ -58,7 +60,7 @@ const AirQualityIndex = () => {
         </CardHeader>
         <CardContent>
           <div className="h-24 flex items-center justify-center">
-            <p className="text-muted-foreground">Impossibile caricare i dati AQI</p>
+            <p className="text-muted-foreground">Dati AQI non disponibili per questa città</p>
           </div>
         </CardContent>
       </Card>

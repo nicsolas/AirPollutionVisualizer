@@ -13,18 +13,15 @@ const CitySelector = () => {
   const { selectedCity, setSelectedCity } = usePollution();
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Fetch cities from OpenAQ
+  // Fetch cities from OpenAQ (Italy, unique city names)
   const { data: cities, isLoading, error } = useQuery({
-    queryKey: ["openaq-cities"],
+    queryKey: ["openaq-cities-it"],
     queryFn: async () => {
-      const res = await fetch("https://api.openaq.org/v2/cities?limit=1000&country_id=IT");
+      const res = await fetch("https://api.openaq.org/v2/cities?country=IT&limit=1000&order_by=city");
       const json = await res.json();
-      // Map to { id, name, country }
-      return json.results.map((c: any) => ({
-        id: c.city,
-        name: c.city,
-        country: c.country,
-      }));
+      // Remove duplicates and filter out nulls
+      const unique = Array.from(new Set(json.results.map((c: any) => String(c.city)))).filter((city): city is string => Boolean(city));
+      return unique.map(city => ({ id: city, name: city, country: "IT" }));
     },
     staleTime: 1000 * 60 * 60,
   });
@@ -32,6 +29,10 @@ const CitySelector = () => {
   const handleCityChange = (cityId: string) => {
     setSelectedCity(cityId);
   };
+
+  const filteredCities = cities ? cities.filter((city: any) =>
+    city.name.toLowerCase().includes(searchTerm.toLowerCase())
+  ) : [];
 
   const currentCity = cities?.find((city: any) => city.id === selectedCity);
 
@@ -61,16 +62,23 @@ const CitySelector = () => {
 
   return (
     <div className="relative w-full max-w-md">
+      <input
+        type="text"
+        placeholder="Cerca città..."
+        className="mb-2 w-full border rounded px-2 py-1"
+        value={searchTerm}
+        onChange={e => setSearchTerm(e.target.value)}
+      />
       <Select value={selectedCity} onValueChange={handleCityChange}>
         <SelectTrigger className="w-full">
           <SelectValue placeholder="Seleziona una città">
-            {currentCity ? `${currentCity.name}, ${currentCity.country}` : "Seleziona una città"}
+            {currentCity ? `${currentCity.name}, Italia` : "Seleziona una città"}
           </SelectValue>
         </SelectTrigger>
         <SelectContent>
-          {cities.map((city: any) => (
+          {(filteredCities && filteredCities.length > 0 ? filteredCities : cities || []).map((city: any) => (
             <SelectItem key={city.id} value={city.id}>
-              {city.name}, {city.country}
+              {city.name}, Italia
             </SelectItem>
           ))}
         </SelectContent>
