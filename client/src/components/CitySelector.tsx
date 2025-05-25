@@ -14,19 +14,19 @@ const CitySelector = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const apiKey = import.meta.env.VITE_OPENAQ_API_KEY;
-  // Fetch cities from OpenAQ v3 (Italy, unique city names)
+  // Fetch cities from OpenAQ v2 (Italy, unique city names)
   const { data: cities, isLoading, error } = useQuery({
     queryKey: ["openaq-cities-it"],
     queryFn: async () => {
-      const res = await fetch("https://api.openaq.org/v3/cities?country=IT&limit=1000&order_by=city", {
+      const res = await fetch("https://api.openaq.org/v2/cities?country=IT&limit=1000&order_by=city", {
         headers: {
           "accept": "application/json",
           ...(apiKey ? { "X-API-Key": apiKey } : {})
         },
       });
       const json = await res.json();
-      // OpenAQ v3: json.data è l'array delle città
-      const unique = Array.from(new Set((json.data || []).map((c: any) => String(c.city)))).filter((city): city is string => Boolean(city));
+      // OpenAQ v2: json.results è l'array delle città
+      const unique = Array.from(new Set((json.results || []).map((c: any) => String(c.city)))).filter((city): city is string => Boolean(city));
       return unique.map(city => ({ id: city, name: city, country: "IT" }));
     },
     staleTime: 1000 * 60 * 60,
