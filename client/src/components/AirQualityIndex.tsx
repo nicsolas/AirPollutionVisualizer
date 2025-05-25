@@ -1,46 +1,40 @@
-import { PollutantType, AQILevel } from "@/lib/types";
-import { aqiColors, getAQIColor } from "@/lib/utils/colors";
 import { useQuery } from "@tanstack/react-query";
 import { usePollution } from "@/lib/stores/usePollution";
-import { getApiUrl } from "@/lib/queryClient";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { aqiColors, getAQIColor } from "@/lib/utils/colors";
+import { AQILevel } from "@/lib/types";
 import { useMemo } from "react";
 
+function pm25ToAQI(pm25: number): { aqi: number; level: AQILevel } {
+  // Semplice conversione PM2.5 -> AQI (approssimativa, US EPA)
+  if (pm25 <= 12) return { aqi: Math.round(pm25 * 4), level: AQILevel.Good };
+  if (pm25 <= 35.4) return { aqi: Math.round(50 + ((pm25 - 12.1) * (100 - 51) / (35.4 - 12.1))), level: AQILevel.Moderate };
+  if (pm25 <= 55.4) return { aqi: Math.round(100 + ((pm25 - 35.5) * (150 - 101) / (55.4 - 35.5))), level: AQILevel.UnhealthyForSensitive };
+  if (pm25 <= 150.4) return { aqi: Math.round(150 + ((pm25 - 55.5) * (200 - 151) / (150.4 - 55.5))), level: AQILevel.Unhealthy };
+  if (pm25 <= 250.4) return { aqi: Math.round(200 + ((pm25 - 150.5) * (300 - 201) / (250.4 - 150.5))), level: AQILevel.VeryUnhealthy };
+  return { aqi: 300, level: AQILevel.Hazardous };
+}
+
 const AirQualityIndex = () => {
-  const { selectedCity, timeOffset } = usePollution();
-  const {
-    data: cityData,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: [
-      `/api/pollution/${selectedCity}?offset=${timeOffset}`
-    ],
+  const { selectedCity } = usePollution();
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["openaq-aqi", selectedCity],
     enabled: !!selectedCity,
-    queryFn: async ({ queryKey }) => {
-      const url = getApiUrl(queryKey[0] as string);
-      const res = await fetch(url);
-      if (!res.ok) throw new Error("Impossibile recuperare i dati AQI");
-      return res.json();
+    queryFn: async () => {
+      const res = await fetch(`https://api.openaq.org/v2/latest?city=${encodeURIComponent(selectedCity)}&parameter=pm25&limit=1`);
+      const json = await res.json();
+      const pm25 = json.results?.[0]?.measurements?.find((m: any) => m.parameter === "pm25")?.value;
+      return pm25;
     },
+    staleTime: 1000 * 60 * 10,
   });
-  
-  // Determina le classi CSS del livello AQI in base ai dati correnti
+
   const aqiDisplay = useMemo(() => {
-    if (!cityData) return { level: AQILevel.Good, color: aqiColors[AQILevel.Good], value: 0 };
-    
-    const { aqi, level } = cityData.data;
-    const color = getAQIColor(aqi);
-    
-    return { level, color, value: aqi };
-  }, [cityData]);
-  
-  // Crea lo stile di animazione per l'indicatore
-  const indicatorStyle = {
-    backgroundColor: aqiDisplay.color,
-    boxShadow: `0 0 12px ${aqiDisplay.color}`,
-  };
-  
+    if (!data) return { aqi: 0, level: AQILevel.Good, color: aqiColors[AQILevel.Good] };
+    const { aqi, level } = pm25ToAQI(data);
+    return { aqi, level, color: getAQIColor(aqi) };
+  }, [data]);
+
   if (isLoading) {
     return (
       <Card className="min-w-[300px]">
@@ -55,7 +49,8 @@ const AirQualityIndex = () => {
       </Card>
     );
   }
-  if (error || !cityData) {
+
+  if (error || !data) {
     return (
       <Card className="min-w-[300px]">
         <CardHeader className="pb-2">
@@ -69,28 +64,25 @@ const AirQualityIndex = () => {
       </Card>
     );
   }
-  
+
   return (
     <Card className="min-w-[300px]">
       <CardHeader className="pb-2">
         <CardTitle className="text-lg">Indice Qualità dell'Aria</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="flex flex-col items-center">
-          <div className="relative w-40 h-40 flex items-center justify-center mb-2">
-            <div className="absolute inset-0 rounded-full opacity-10" style={{ backgroundColor: aqiDisplay.color }}></div>
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1/3 h-1/3 rounded-full transition-all duration-700" style={indicatorStyle}></div>
-            <div className="relative z-10 text-4xl font-bold">{aqiDisplay.value}</div>
+        <div className="flex flex-col items-center justify-center">
+          <div
+            className="rounded-full w-20 h-20 flex items-center justify-center text-2xl font-bold mb-2"
+            style={{ backgroundColor: aqiDisplay.color, color: "#fff" }}
+          >
+            {aqiDisplay.aqi}
           </div>
-          
-          <div className="mt-1 text-lg font-medium" style={{ color: aqiDisplay.color }}>
+          <div className="text-lg font-semibold mb-1" style={{ color: aqiDisplay.color }}>
             {aqiDisplay.level}
           </div>
-          
           <div className="mt-3 text-center text-sm text-muted-foreground">
-            {cityData.data.dominantPollutant && (
-              <p>Inquinante principale: {cityData.data.dominantPollutant}</p>
-            )}
+            <p>Inquinante principale: PM2.5</p>
           </div>
         </div>
       </CardContent>
