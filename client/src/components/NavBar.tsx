@@ -54,12 +54,12 @@ const NavBar = () => {
               asChild
               className={cn(
                 "text-muted-foreground", 
-                location.pathname === "/about" && "text-foreground font-medium"
+                location.pathname === "/effects" && "text-foreground font-medium"
               )}
             >
-              <Link to="/about">
-                <Info className="mr-2 h-4 w-4" />
-                <span>Info</span>
+              <Link to="/effects">
+                <img src="/textures/icona effetti.png" alt="Effetti" className="mr-2 h-4 w-4" />
+                <span>Effetti sull'ambiente</span>
               </Link>
             </Button>
 
@@ -69,12 +69,12 @@ const NavBar = () => {
               asChild
               className={cn(
                 "text-muted-foreground", 
-                location.pathname === "/effects" && "text-foreground font-medium"
+                location.pathname === "/about" && "text-foreground font-medium"
               )}
             >
-              <Link to="/effects">
+              <Link to="/about">
                 <Info className="mr-2 h-4 w-4" />
-                <span>Effetti sull'ambiente</span>
+                <span>Info</span>
               </Link>
             </Button>
           </div>
