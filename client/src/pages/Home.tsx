@@ -15,6 +15,7 @@ import { CityPollutionData } from "@/lib/types";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import EnvironmentalEffects from "@/components/EnvironmentalEffects";
 
 const Home = () => {
   const { 
@@ -81,6 +82,10 @@ const Home = () => {
             </Link>
           </AnimatedButton>
         </div>
+      </div>
+
+      <div className="mt-8">
+        <EnvironmentalEffects />
       </div>
     </div>
   );
