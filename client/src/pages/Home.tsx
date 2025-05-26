@@ -15,7 +15,7 @@ import { CityPollutionData } from "@/lib/types";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import EnvironmentalEffects from "@/components/EnvironmentalEffects";
+import { Globe } from "lucide-react";
 
 const Home = () => {
   const { 
@@ -73,6 +73,46 @@ const Home = () => {
         <div className="flex flex-col gap-6">
           <AirQualityIndex />
           <PollutionControls />
+          {/* Scheda effetti sull'ambiente, con icona globo illustrata e illustrazioni */}
+          <div className="rounded-2xl border border-primary/40 bg-gradient-to-br from-blue-100/80 to-green-100/80 shadow-2xl p-0 overflow-hidden flex flex-col items-stretch animate-fadeIn">
+            <div className="flex items-center gap-3 px-6 py-4 bg-primary/10 border-b border-primary/20">
+              <img src="/textures/earth.png" alt="Globo" className="h-8 w-8 object-contain drop-shadow-md" />
+              <span className="font-bold text-xl text-blue-900 tracking-wide">Effetti sull'ambiente</span>
+            </div>
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 p-6">
+              <div className="flex flex-col items-center text-center">
+                <img src="https://cdn.pixabay.com/photo/2017/01/31/13/14/earth-2025489_1280.png" alt="Inquinamento aria" className="w-28 h-28 object-contain mb-2 rounded-full shadow" />
+                <div className="font-semibold text-blue-800 mb-1">Inquinamento dell'aria</div>
+                <div className="text-blue-900 text-sm">Danni a ecosistemi, foreste e colture a causa di ozono, particolato e altri inquinanti.</div>
+              </div>
+              <div className="flex flex-col items-center text-center">
+                <img src="https://cdn.pixabay.com/photo/2016/03/31/19/14/water-1298818_1280.png" alt="Acidificazione" className="w-28 h-28 object-contain mb-2 rounded-full shadow" />
+                <div className="font-semibold text-blue-800 mb-1">Acidificazione</div>
+                <div className="text-blue-900 text-sm">Piogge acide che alterano il pH di suoli e acque, danneggiando flora e fauna.</div>
+              </div>
+              <div className="flex flex-col items-center text-center">
+                <img src="https://cdn.pixabay.com/photo/2017/01/31/13/13/earth-2025487_1280.png" alt="Cambiamento climatico" className="w-28 h-28 object-contain mb-2 rounded-full shadow" />
+                <div className="font-semibold text-blue-800 mb-1">Cambiamento climatico</div>
+                <div className="text-blue-900 text-sm">Emissioni di gas serra (CO₂, metano) che contribuiscono al riscaldamento globale.</div>
+              </div>
+              <div className="flex flex-col items-center text-center">
+                <img src="https://cdn.pixabay.com/photo/2017/01/31/13/13/earth-2025488_1280.png" alt="Perdita biodiversità" className="w-28 h-28 object-contain mb-2 rounded-full shadow" />
+                <div className="font-semibold text-blue-800 mb-1">Perdita di biodiversità</div>
+                <div className="text-blue-900 text-sm">Specie animali e vegetali minacciate da habitat degradati e inquinamento.</div>
+              </div>
+              <div className="flex flex-col items-center text-center">
+                <img src="https://cdn.pixabay.com/photo/2016/03/31/19/14/water-1298818_1280.png" alt="Contaminazione acque" className="w-28 h-28 object-contain mb-2 rounded-full shadow" />
+                <div className="font-semibold text-blue-800 mb-1">Contaminazione delle acque</div>
+                <div className="text-blue-900 text-sm">Deposizione di inquinanti atmosferici nei laghi, fiumi e mari.</div>
+              </div>
+              <div className="flex flex-col items-center text-center">
+                <img src="https://cdn.pixabay.com/photo/2017/01/31/13/13/earth-2025486_1280.png" alt="Effetti su suolo e colture" className="w-28 h-28 object-contain mb-2 rounded-full shadow" />
+                <div className="font-semibold text-blue-800 mb-1">Effetti su suolo e colture</div>
+                <div className="text-blue-900 text-sm">Riduzione della fertilità e della produttività agricola.</div>
+              </div>
+            </div>
+          </div>
+          {/* Fine scheda effetti ambiente */}
           <InfoPanel />
 
           <AnimatedButton asChild motionEffect="bounce" variant="gradient" className="mt-auto">
@@ -83,12 +123,10 @@ const Home = () => {
           </AnimatedButton>
         </div>
       </div>
-
-      <div className="mt-8">
-        <EnvironmentalEffects />
-      </div>
     </div>
   );
 };
 
 export default Home;
+
+// Nuova route per la scheda effetti sull'ambiente

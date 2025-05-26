@@ -62,6 +62,21 @@ const NavBar = () => {
                 <span>Info</span>
               </Link>
             </Button>
+
+            <Button
+              variant="ghost"
+              size="sm"
+              asChild
+              className={cn(
+                "text-muted-foreground", 
+                location.pathname === "/effects" && "text-foreground font-medium"
+              )}
+            >
+              <Link to="/effects">
+                <Info className="mr-2 h-4 w-4" />
+                <span>Effetti sull'ambiente</span>
+              </Link>
+            </Button>
           </div>
 
           <Button

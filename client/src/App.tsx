@@ -13,6 +13,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Pollutants from "./pages/Pollutants";
 import NotFound from "./pages/not-found";
+import EffectsPage from "./pages/Effects";
 
 function App() {
   // Using functions directly from the store
@@ -65,6 +66,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/pollutants" element={<Pollutants />} />
+            <Route path="/effects" element={<EffectsPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
